@@ -1,77 +1,121 @@
-# Hola, Soy Cirotti :alien:
 
-Nose que wea mas poner
+<!--horizontal divider(gradiant)-->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
-## :headphones: Playlist Wenardas
+<!--h1 without bottom border-->
+<div id="user-content-toc">
+  <ul align="center">
+    <summary><h1 style="display: inline-block">Hi 👋, I'm Nishant</h1></summary>
+  </ul>
+</div>
 
-[![Temones Chilensis](https://img.shields.io/badge/Programming%20Music-%231DB954.svg?&style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/5oWRii865yrY3uInUbM9q0?si=b31b89a1180c45ae) [![Otra wea wena](https://img.shields.io/badge/KPOP%20Music-%231DB954.svg?&style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/2DFExFNWYOwQMZy6wUeCxX?si=s1Ndgj8hTg-r8zLlvRgv1Q) [![PPOP Music](https://img.shields.io/badge/PPOP%20Music-%231DB954.svg?&style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/58bZKfJFpUl2CwWET1QJ3X?si=259YV8_VRS-IKHsFZMmPTQ)
 
-[![Spotify](https://readme-spotify.warengonzaga.com/api/spotify)](https://open.spotify.com/user/vmt7lpqdatuelp2chw7ur2p2l)
+<!--- snake -->
+<div align="center">
+  <img  src="https://github.com/1999AZZAR/1999AZZAR/blob/main/resources/img/grid-snake.svg"
+       alt="snake" /></a>
+</div>
 
-## :earth_asia: My Community
 
-Wanna see some of my future projects? Join today!
+<!--h2 without bottom border-->
+<div id="user-content-toc">
+  <ul align="center">
+    <summary><h2 style="display: inline-block">Confusion is part of Programming</h2></summary>
+  </ul>
+</div>
 
-[![Community](https://discordapp.com/api/guilds/659684980137656340/widget.png?style=banner2)](https://bmc.xyz/warengonzaga)
 
----
+<!--Intro start-->
+- 🔭 I’m currently working on **AWS, React, React Native, Nodejs, MongoDB**
 
-<!-- markdownlint-disable MD033 -->
+- 🌱 I’m currently learning **to put together multiple Hyper Beast Stack for Scalable Applications.**
 
-<details>
-    <summary>&#128240 <b>Latest Blogs Posts</b></summary><br/>
+- ☁️ I've keen interest in cloud computing. So,I'm learning **AWS**
 
-<!-- BLOG-POST-LIST:START -->
-- [GitHub Codespaces](https://dev.to/warengonzaga/github-codespaces-1i8k)
-- [Animate.css v4 Update!](https://dev.to/warengonzaga/animate-css-v4-update-18m8)
-- [An open-source curl-based command line tracker for coronavirus or covid-19 with historical chart.](https://dev.to/warengonzaga/an-open-source-curl-based-command-line-tracker-for-coronavirus-or-covid-19-with-historical-chart-3op9)
-- [CURL request without protocol on expressJS server?](https://dev.to/warengonzaga/curl-request-without-protocol-on-expressjs-server-32op)
-- [Coding Style?](https://dev.to/warengonzaga/coding-style-3p36)
-<!-- BLOG-POST-LIST:END -->
+- 📝 I regularly write articles on [Hashnode](https://1010nishant.hashnode.dev/)
 
-</details>
+- 💬 Ask me about **AWS, react, react-native, nodejs, mongoDB**
 
-<details>
-    <summary>&#128187 <b>GitHub Activities</b></summary><br/>
+- 📫 Feel free to reach me out **nishantjangid6377@gmail.com**
 
-<!--START_SECTION:activity-->
-1. 🗣 Commented on [#3095](https://github.com/24pullrequests/24pullrequests/issues/3095) in [24pullrequests/24pullrequests](https://github.com/24pullrequests/24pullrequests)
-2. ❗️ Opened issue [#9](https://github.com/WarenGonzaga/fork-corner/issues/9) in [WarenGonzaga/fork-corner](https://github.com/WarenGonzaga/fork-corner)
-3. ❗️ Opened issue [#8](https://github.com/WarenGonzaga/fork-corner/issues/8) in [WarenGonzaga/fork-corner](https://github.com/WarenGonzaga/fork-corner)
-4. ❗️ Opened issue [#3095](https://github.com/24pullrequests/24pullrequests/issues/3095) in [24pullrequests/24pullrequests](https://github.com/24pullrequests/24pullrequests)
-5. 🗣 Commented on [#82](https://github.com/benawad/vscode-stories/issues/82) in [benawad/vscode-stories](https://github.com/benawad/vscode-stories)
-<!--END_SECTION:activity-->
+- 🏠 Also We've a tech community called [Dev Hac](https://discord.com/invite/p4TWyft886).
+<!--Intro end-->
 
-</details>
 
-<details>
-    <summary>&#127942 <b>GitHub Awards</b></summary><br/>
 
-![Github Trophy](https://github-profile-trophy.vercel.app/?username=warengonzaga)
+<!--- stats & Trophy (start) -->
+<p align="center">
+  <!--- stats (start) -->
+<table align="center">
+<tr border="none">
+<td width="50%" align="center">
+  
+  <img  align="center"  src="https://github-readme-stats.vercel.app/api?username=1010nishant&theme=dark&show_icons=true&count_private=true" />
+  <br></br>
+  <img  title="🔥 Get streak stats for your profile at git.io/streak-stats" alt="Mark streak" src="https://github-readme-streak-stats.herokuapp.com/?user=1010nishant&theme=dark&hide_border=false" /> 
+</td>
 
-</details>
+<td width="50%" align="center">
 
-<details>
-    <summary>&#9889 <b>GitHub Stats</b></summary><br/>
+  <img  align="center"  src="https://github-readme-stats.anuraghazra1.vercel.app/api/top-langs/?username=1010nishant&theme=dark&hide_border=false&no-bg=true&no-frame=true&langs_count=10"/>
+  
+  </td>
+</tr>
+</table>
+<!--- stats (end) -->
 
-[![Waren Gonzaga Github Stats](https://readme-stats.warengonzaga.com/api?username=warengonzaga&show_icons=true&count_private=true)](https://github.com/warengonzaga/github-readme-stats) [![Top Language](https://readme-stats.warengonzaga.com/api/top-langs?username=warengonzaga&layout=compact)](https://github.com/warengonzaga/github-readme-stats)
+<!--- trophy (start) -->
+<div align=center>
+  <a href="https://github.com/ryo-ma/github-profile-trophy" title="Go to Source">
+      <img align="center" width=84% src="https://github-profile-trophy.vercel.app/?username=1010nishant&theme=radical&row=1&column=7&margin-h=15&margin-w=5&no-bg=true" alt="TROPHY" />
+    </a>
+</div>
+<!--- trophy (start) -->
 
-</details>
 
-<!-- markdownlint-enable MD033 -->
+</p>        
+<!--- stats (end) -->
 
----
 
-:computer: Made with :heart: by **Waren Gonzaga** with **YHWH** :pray:
+<!--h1 without bottom border-->
+<div id="user-content-toc">
+  <ul align="center">
+    <summary><h2 style="display: inline-block">Technologies That I Know👨🏻‍💻</h2></summary>
+  </ul>
+</div>
+<!--tech stack icons-->
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=git,aws,bootstrap,c,cpp,css,discord,docker,dynamodb,express,figma,firebase,github,html,idea,java,js,kotlin,linux,md,materialui,mongodb,mysql,nextjs,nodejs,postman,py,react,redux,tailwind,ts,vscode&perline=14" />
+  </a>
+</p>
 
-[personal website]: https://warengonzaga.com
-[business website]: https://warengonzaga.co
-[facebook]: https://facebook.com/warengonzagaofficial
-[twitter]: https://twitter.com/warengonzaga
-[instagram]: https://instagram.com/warengonzagaofficial
-[youtube]: https://youtube.com/warengonzaga
 
-----
-Credits: [WarenGonzaga](https://github.com/WarenGonzaga)
+<!-- Connect with me -->
+<!--h2 without bottom border-->
+<div id="user-content-toc">
+  <ul align="center">
+    <summary><h2 style="display: inline-block">Connect With Me🤝</h2></summary>
+  </ul>
+</div>
 
-Last Edited on: 17/11/2020
+<!--icons and links-->
+<a href="https://discord.gg/UjwKkJsXsf" target="blank"><img align="center" src="https://user-images.githubusercontent.com/88904952/234982627-019fd336-6248-453c-9b05-97c13fd1d207.png" alt="discord" height="50" width="50" /></a>
+  
+</p>
+
+
+<!--profile visit count-->
+<div align="center">
+  
+[![](https://visitcount.itsvg.in/api?id=1010nishant&icon=3&color=6)](https://visitcount.itsvg.in)
+  
+</div>
+
+<!--horizontal divider(gradiant)-->
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+
+----------------------------------------------------------------------
+Credit: [1010nishant](https://github.com/1010nishant)
+
+Last Edited on: 29/4/2023
