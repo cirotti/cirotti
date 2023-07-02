@@ -2,14 +2,6 @@
 
 Nose que wea mas poner
 
-
-- :muscle: Currently working as a freelance developer.
-- :gift_heart: Author of multiple open source projects.
-- :moneybag: Looking for new clients who wants to work with me, [contact me](mailto:business@warengonzaga.co) please.
-- :coffee: Coffee lover, turning it into code, [you can buy me a coffee](https://buymeacoff.ee/warengonzaga)!
-- :trophy: 2020 Goals: Contribute and publish more open source projects.
-- :dart: Wasting my time to save other people's time.
-
 ## :headphones: Spotify Playing
 
 [![Programming Music](https://img.shields.io/badge/Programming%20Music-%231DB954.svg?&style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/1FWq5Cu05LmtSHgFEXRnZO?si=FozGJF9nRXq2wTv_JpN2wQ) [![KPOP Music](https://img.shields.io/badge/KPOP%20Music-%231DB954.svg?&style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/2DFExFNWYOwQMZy6wUeCxX?si=s1Ndgj8hTg-r8zLlvRgv1Q) [![PPOP Music](https://img.shields.io/badge/PPOP%20Music-%231DB954.svg?&style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/58bZKfJFpUl2CwWET1QJ3X?si=259YV8_VRS-IKHsFZMmPTQ)
