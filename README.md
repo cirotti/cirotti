@@ -31,7 +31,7 @@
 
 
 
-<!--- stats & Trophy (start) -->
+##### Lenguajes que tengo conocimiento y que estoy aprendiendo
 ![C](https://img.shields.io/badge/-C-000000?style=flat&logo=c)
 ![C++](https://img.shields.io/badge/-C++-000000?style=flat&logo=c%2B%2B)
 ![HTML5](https://img.shields.io/badge/-HTML5-000000?style=flat&logo=html5)
