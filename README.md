@@ -1,6 +1,6 @@
-# Hi, I'm Waren Gonzaga (:coffee::computer::bulb::heart:)
+# Hola, Soy Cirotti (:coffee::computer::bulb::heart:)
 
-I'm a part time open source developer and cybersecurity researcher from the Philippines!
+Nose que wea mas poner
 
 
 - :muscle: Currently working as a freelance developer.
