@@ -1,4 +1,4 @@
-# Hola, Soy Cirotti (:alien:)
+# Hola, Soy Cirotti :alien:
 
 Nose que wea mas poner
 
