@@ -26,9 +26,8 @@
 
 
 <!--Intro start-->
-- 🏠 Also We've a tech community called [Dev Hac](https://discord.com/invite/p4TWyft886).
+- 🏠 Unete a mi server de GTA V [Dev Hac](https://discord.com/invite/p4TWyft886).
 <!--Intro end-->
-
 
 
 <!--- stats & Trophy (start) -->
@@ -69,7 +68,7 @@
 <!--h2 without bottom border-->
 <div id="user-content-toc">
   <ul align="center">
-    <summary><h2 style="display: inline-block">Connect With Me🤝</h2></summary>
+    <summary><h2 style="display: inline-block">Contactame🤝</h2></summary>
   </ul>
 </div>
 
