@@ -26,7 +26,7 @@
 
 
 <!--Intro start-->
-- 🏠 Unete a mi server de GTA V [KatarsisRP](https://discord.gg/gNnFRd6nEu).
+- 🏠 Unete a mi server de GTA V [KatarsisRP](https://discord.gg/gNnFRd6nEu)
 <!--Intro end-->
 
 
@@ -65,10 +65,6 @@
 </div>
 
 <!--icons and links-->
-<a                               href="https://discord.gg/UjwKkJsXsf" target="blank"><img align="center" src="https://user-images.githubusercontent.com/88904952/234982627-019fd336-6248-453c-9b05-97c13fd1d207.png" alt="discord" height="50" width="50" /></a> 
-  
- </p>
-
 
 <!--profile visit count-->
 <div align="center">
