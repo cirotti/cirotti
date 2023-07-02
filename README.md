@@ -1,4 +1,4 @@
-# Hola, Soy Cirotti (:devil::computer::bulb::heart:)
+# Hola, Soy Cirotti (:alien:)
 
 Nose que wea mas poner
 
