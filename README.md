@@ -25,11 +25,6 @@
 </div>
 
 
-<!--Intro start-->
-- 🏠 Unete a mi server de GTA V [KatarsisRP](https://discord.gg/gNnFRd6nEu)
-<!--Intro end-->
-
-
 
 ### Lenguajes :
 
@@ -69,6 +64,8 @@
   </ul>
 </div>
 
+
+- 🏠 Unete a mi server de GTA V [KatarsisRP](https://discord.gg/gNnFRd6nEu)
   
 </div>
 
