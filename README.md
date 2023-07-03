@@ -3,6 +3,11 @@
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 ![Github Banner](https://github.com/Jaydeep-Yadav/Jaydeep-Yadav/blob/main/banner.png)
+<p align="center">
+  <img src="https://i.postimg.cc/hPw8t2GR/CAN.png" height="200"/>
+</p>
+<br>
+
 <div id="user-content-toc">
   <ul align="center">
     <summary><h1 style="display: inline-block">Hola👋 Que fay?</h1></summary>
