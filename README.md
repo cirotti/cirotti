@@ -64,7 +64,7 @@
 <!--h2 without bottom border-->
 <div id="user-content-toc">
   <ul align="center">
-    <summary><h2 style="display: inline-block">Contactame al discord cir0ti#0001🤝</h2></summary>
+    <summary><h2 style="display: inline-block">Contactame al discord cir0tti#0001🤝</h2></summary>
   </ul>
 </div>
 
