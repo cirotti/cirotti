@@ -69,7 +69,7 @@
 </div>
 
 
-- 🏠 Unete a mi server de GTA V [KatarsisRP](https://discord.gg/gNnFRd6nEu)
+- 🏠 Servidor de Five M/Gta V [KatarsisRP](https://discord.gg/gNnFRd6nEu)
   
 </div>
 
