@@ -4,7 +4,7 @@
 
 ![Github Banner](https://github.com/Jaydeep-Yadav/Jaydeep-Yadav/blob/main/banner.png)
 <p align="center">
-  <img src="https://postimg.cc/R35M2jBf" height="400"/>
+  <img src="https://i.postimg.cc/Gp9HTCgM/2-E1090-D2-5527-44-F0-90-C0-304-E16-F4-B9-F1.jpg" height="400"/>
 </p>
 <br>
 
