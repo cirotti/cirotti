@@ -28,7 +28,6 @@
 </div>
 
 
-
 ### Lenguajes :
 
 ![Java](https://img.shields.io/badge/-java-E34A86?style=flat-square&logo=java)
@@ -63,7 +62,7 @@
 <!--h2 without bottom border-->
 <div id="user-content-toc">
   <ul align="center">
-    <summary><h2 style="display: inline-block">Contactame al discord cirotti#0001🤝</h2></summary>
+    <summary><h2 style="display: inline-block">Contactame al discord cirotti🤝</h2></summary>
   </ul>
 </div>
   
