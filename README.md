@@ -3,7 +3,7 @@
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 <p align="center">
-  <img src="https://i.postimg.cc/Gp9HTCgM/2-E1090-D2-5527-44-F0-90-C0-304-E16-F4-B9-F1.jpg" height="400"/>
+  <img src="https://wallpaperaccess.com/full/8351156.gif" height="200"/>
 </p>
 <br>
 
