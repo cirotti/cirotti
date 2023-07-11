@@ -67,9 +67,6 @@
     <summary><h2 style="display: inline-block">Contactame al discord cirotti#0001🤝</h2></summary>
   </ul>
 </div>
-
-
-- 🏠 Servidor de Five M/Gta V [KatarsisRP](https://discord.gg/gNnFRd6nEu)
   
 </div>
 
