@@ -118,7 +118,6 @@ https://fontawesome.com/icons?d=gallery */
   display: true // Set false to hide this section, defaults to true
 };
 
-// Education Section
 // Your top 3 proficient stacks/tech experience
 
 const techStack = {
