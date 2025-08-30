@@ -254,7 +254,7 @@ const achievementSection = {
       title: "Desarrollo Web",
       subtitle:
         "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
-      image: require("./assets/images/codeInLogo.webp"),
+      image: require("./assets/images/21034578.jpg"),
       imageAlt: "Google Code-In Logo",
       footerLink: [
         {
