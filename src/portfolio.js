@@ -53,7 +53,7 @@ const skillsSection = {
     emoji(
       "⚡ Desarrollo de páginas web altamente interactivas y aplicaciones móviles modernas"
     ),
-    emoji("⚡ Progressive Web Applications ( PWA ) in normal and SPA Stacks"),
+    emoji("⚡ Diseño gráfico y creación de interfaces atractivas y funcionales"),
     emoji(
       "⚡ Integración de servicios de terceros como Firebase, AWS y Digital Ocean"
     )
