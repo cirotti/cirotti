@@ -389,5 +389,4 @@ export {
   contactInfo,
   twitterDetails,
   isHireable,
-  resumeSection
 };
