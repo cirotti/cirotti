@@ -196,7 +196,7 @@ const bigProjects = {
   projects: [
     {
       image: require("./assets/images/UrbanDF.png"),
-      projectName: "Urban Design (No terminada)",
+      projectName: "Urban Design",
       projectDesc: "Diseñé y desarrollé un sitio moderno y minimalista para una marca urbana, optimizado para una experiencia fluida y adaptable a todos los dispositivos.",
       footerLink: [
         {
