@@ -48,14 +48,14 @@ const socialMediaLinks = {
 
 const skillsSection = {
   title: "What I do",
-  subTitle: "DESARROLLADOR FULL STACK APASIONADO POR WEB, MÓVIL, DISEÑO Y BOTS",
+  subTitle: "CRAZY FULL STACK DEVELOPER WHO WANTS TO EXPLORE EVERY TECH STACK",
   skills: [
     emoji(
-      "⚡ Desarrollo de páginas web altamente interactivas y aplicaciones móviles modernas"
+      "⚡ Develop highly interactive Front end / User Interfaces for your web and mobile applications"
     ),
-    emoji("⚡ Creación de bots para múltiples plataformas y automatización de tareas"),
+    emoji("⚡ Progressive Web Applications ( PWA ) in normal and SPA Stacks"),
     emoji(
-      "⚡ Diseño gráfico y creación de interfaces atractivas y funcionales"
+      "⚡ Integration of third party services such as Firebase/ AWS / Digital Ocean"
     )
   ],
 
