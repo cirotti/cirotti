@@ -55,7 +55,7 @@ const skillsSection = {
     ),
     emoji("⚡ Creación de bots para múltiples plataformas y automatización de tareas"),
     emoji(
-      "⚡ Diseño gráfico y creación de interfaces atractivas y funcionales"
+      "⚡ Integration of third party services such as Firebase/ AWS / Digital Ocean"
     )
   ],
 
