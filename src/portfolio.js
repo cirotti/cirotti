@@ -252,45 +252,36 @@ const achievementSection = {
 achievementsCards: [
   {
     title: "Desarrollo Web",
-    subtitle: "Creación de sitios web profesionales, responsivos y optimizados con tecnologías modernas como React, Next.js y TailwindCSS.",
-    image: require("./assets/images/webDev.webp"), // Cambia por tu imagen personalizada
+    subtitle:
+      "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
+    image: require("./assets/images/codeInLogo.webp"), // Se mantiene la imagen original
     imageAlt: "Desarrollo Web",
     footerLink: [
       {
-        name: "Ver Portafolio",
+        name: "Ver Proyectos",
         url: "https://tu-portafolio.com"
       }
     ]
   },
   {
     title: "Aplicaciones Móviles",
-    subtitle: "Desarrollo de apps móviles híbridas y nativas con React Native o Flutter para Android e iOS.",
-    image: require("./assets/images/mobileDev.webp"), // Cambia por tu imagen personalizada
+    subtitle:
+      "Desarrollo de aplicaciones móviles híbridas y nativas para Android e iOS.",
+    image: require("./assets/images/googleAssistantLogo.webp"), // Se mantiene la imagen original
     imageAlt: "Aplicaciones Móviles",
     footerLink: [
       {
-        name: "Ver Proyecto",
+        name: "Ver Ejemplos",
         url: "https://github.com/tuusuario"
       }
     ]
   },
   {
-    title: "Diseño Gráfico",
-    subtitle: "Diseños creativos y personalizados para redes sociales, branding y marketing digital.",
-    image: require("./assets/images/design.webp"), // Cambia por tu imagen personalizada
-    imageAlt: "Diseño Gráfico",
-    footerLink: [
-      {
-        name: "Ver Diseños",
-        url: "https://tu-behance.com"
-      }
-    ]
-  },
-  {
-    title: "Bots para Discord, Telegram y WhatsApp",
-    subtitle: "Automatización, moderación, notificaciones y funcionalidades personalizadas para tus comunidades y negocios.",
-    image: require("./assets/images/bots.webp"), // Cambia por tu imagen personalizada
-    imageAlt: "Bots en Discord, Telegram y WhatsApp",
+    title: "Bots y Automatización",
+    subtitle:
+      "Creación de bots personalizados para Discord, Telegram y WhatsApp con funciones avanzadas.",
+    image: require("./assets/images/pwaLogo.webp"), // Se mantiene la imagen original
+    imageAlt: "Bots y Automatización",
     footerLink: [
       {
         name: "Ver Bots",
