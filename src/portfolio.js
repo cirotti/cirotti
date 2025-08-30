@@ -251,11 +251,11 @@ const achievementSection = {
 
   achievementsCards: [
     {
-    title: "Desarrollo Web",
-    subtitle:
-      "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
-    image: require("./assets/images/codeInLogo.webp"),
-    imageAlt: "Desarrollo Web",
+      title: "Desarrollo Web",
+      subtitle:
+        "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
+      image: require("./assets/images/codeInLogo.webp"),
+      imageAlt: "Google Code-In Logo",
     footerLink: [
       {
         name: "Ver Proyectos",
