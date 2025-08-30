@@ -245,8 +245,9 @@ const bigProjects = {
 // Include certificates, talks etc
 
 const achievementSection = {
-title: emoji("¡Mis Servicios! 🚀"),
-subtitle: "Transforma tus ideas en realidad: webs, apps, diseño y automatización.",
+  title: emoji("¡Mis Servicios! 🚀 "),
+  subtitle:
+    "Transforma tus ideas en realidad: webs, apps, diseño y automatización.",
 
   achievementsCards: [
     {
