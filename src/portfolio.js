@@ -251,22 +251,19 @@ const achievementSection = {
 
   achievementsCards: [
     {
-      title: "Desarrollo Web",
-      subtitle:
-        "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
-      image: require("./assets/images/codeInLogo.webp"),
-      imageAlt: "Google Code-In Logo",
-      footerLink: [
-        {
-          name: "Ver Proyectos",
-          url: "https://tu-portafolio.com"
-        },
-        {
-
-        }
-      ]
-    },
-    {
+    title: "Desarrollo Web",
+    subtitle:
+      "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
+    image: require("./assets/images/codeInLogo.webp"),
+    imageAlt: "Desarrollo Web",
+    footerLink: [
+      {
+        name: "Ver Proyectos",
+        url: "https://tu-portafolio.com"
+      }
+    ]
+  },
+  {
       title: "Google Assistant Action",
       subtitle:
         "Developed a Google Assistant Action JavaScript Guru that is available on 2 Billion devices world wide.",
