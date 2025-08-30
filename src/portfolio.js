@@ -20,7 +20,7 @@ const illustration = {
 };
 
 const greeting = {
-  username: "Saad Pasta",
+  username: "Cirotti",
   title: "Hola, Soy Cirotti",
   subTitle: emoji(
     "Un apasionado desarrollador de software full stack 🚀, con gusto por desarrollar páginas web, aplicaciones móviles, diseño gráfico y la creación de bots para múltiples plataformas. Experiencia trabajando con JavaScript, React.js, Node.js, React Native y otras bibliotecas y frameworks interesantes para construir soluciones modernas y completas."
