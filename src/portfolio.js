@@ -249,48 +249,57 @@ const achievementSection = {
   subtitle:
     "Achievements, Certifications, Award Letters and Some Cool Stuff that I have done !",
 
-achievementsCards: [
-  {
-    title: "Desarrollo Web",
-    subtitle:
-      "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
-    image: require("./assets/images/codeInLogo.webp"), // Se mantiene la imagen original
-    imageAlt: "Desarrollo Web",
-    footerLink: [
-      {
-        name: "Ver Proyectos",
-        url: "https://tu-portafolio.com"
-      }
-    ]
-  },
-  {
-    title: "Aplicaciones Móviles",
-    subtitle:
-      "Desarrollo de aplicaciones móviles híbridas y nativas para Android e iOS.",
-    image: require("./assets/images/googleAssistantLogo.webp"), // Se mantiene la imagen original
-    imageAlt: "Aplicaciones Móviles",
-    footerLink: [
-      {
-        name: "Ver Ejemplos",
-        url: "https://github.com/tuusuario"
-      }
-    ]
-  },
-  {
-    title: "Bots y Automatización",
-    subtitle:
-      "Creación de bots personalizados para Discord, Telegram y WhatsApp con funciones avanzadas.",
-    image: require("./assets/images/pwaLogo.webp"), // Se mantiene la imagen original
-    imageAlt: "Bots y Automatización",
-    footerLink: [
-      {
-        name: "Ver Bots",
-        url: "https://github.com/tuusuario"
-      }
-    ]
-  }
-],
-display: true // Set false to hide this section, defaults to true
+  achievementsCards: [
+    {
+      title: "Desarrollo Web",
+      subtitle:
+        "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
+      image: require("./assets/images/codeInLogo.webp"),
+      imageAlt: "Google Code-In Logo",
+      footerLink: [
+        {
+          name: "Ver Proyectos",
+          url: "https://tu-portafolio.com"
+        },
+        {
+          name: "Award Letter",
+          url: "https://drive.google.com/file/d/0B7kazrtMwm5dekxBTW5hQkg2WXUyR3QzQmR0VERiLXlGRVdF/view?usp=sharing"
+        },
+        {
+          name: "Google Code-in Blog",
+          url: "https://opensource.googleblog.com/2019/01/google-code-in-2018-winners.html"
+        }
+      ]
+    },
+    {
+      title: "Google Assistant Action",
+      subtitle:
+        "Developed a Google Assistant Action JavaScript Guru that is available on 2 Billion devices world wide.",
+      image: require("./assets/images/googleAssistantLogo.webp"),
+      imageAlt: "Google Assistant Action Logo",
+      footerLink: [
+        {
+          name: "View Google Assistant Action",
+          url: "https://assistant.google.com/services/a/uid/000000100ee688ee?hl=en"
+        }
+      ]
+    },
+
+    {
+      title: "PWA Web App Developer",
+      subtitle: "Completed Certifcation from SMIT for PWA Web App Development",
+      image: require("./assets/images/pwaLogo.webp"),
+      imageAlt: "PWA Logo",
+      footerLink: [
+        {name: "Certification", url: ""},
+        {
+          name: "Final Project",
+          url: "https://pakistan-olx-1.firebaseapp.com/"
+        }
+      ]
+    }
+  ],
+  display: true // Set false to hide this section, defaults to true
 };
 
 // Blogs Section
