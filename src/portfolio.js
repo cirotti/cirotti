@@ -383,7 +383,6 @@ export {
   blogSection,
   talkSection,
   contactInfo,
-  twitterDetails,
   isHireable,
   resumeSection
 };
