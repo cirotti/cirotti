@@ -288,7 +288,7 @@ const achievementSection = {
     {
       title: "Bots y Automatización",
       subtitle: "Creación de bots personalizados para Discord, Telegram y WhatsApp con funciones avanzadas.",
-      image: require("./assets/images/2106.i201.015.F.m004.c9.chatbot messenger AI isometric.jpg"),
+      image: require("./assets/images/rbots.jpg"),
       imageAlt: "PWA Logo",
       footerLink: [
         {name: "Certification", url: ""},
