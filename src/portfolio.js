@@ -272,10 +272,10 @@ const achievementSection = {
       ]
     },
     {
-      title: "Google Assistant Action",
+      title: "Aplicaciones Móviles",
       subtitle:
-        "Developed a Google Assistant Action JavaScript Guru that is available on 2 Billion devices world wide.",
-      image: require("./assets/images/googleAssistantLogo.webp"),
+        "Desarrollo de aplicaciones móviles híbridas y nativas para Android e iOS.",
+      image: require("./assets/images/ONKJC00.jpg"),
       imageAlt: "Google Assistant Action Logo",
       footerLink: [
         {
@@ -286,9 +286,9 @@ const achievementSection = {
     },
 
     {
-      title: "PWA Web App Developer",
-      subtitle: "Completed Certifcation from SMIT for PWA Web App Development",
-      image: require("./assets/images/pwaLogo.webp"),
+      title: "Bots y Automatización",
+      subtitle: "Creación de bots personalizados para Discord, Telegram y WhatsApp con funciones avanzadas.",
+      image: require("./assets/images/2106.i201.015.F.m004.c9.chatbot messenger AI isometric.jpg"),
       imageAlt: "PWA Logo",
       footerLink: [
         {name: "Certification", url: ""},
