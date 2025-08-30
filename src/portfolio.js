@@ -55,9 +55,6 @@ const skillsSection = {
     ),
     emoji("⚡ Creación de bots para múltiples plataformas y automatización de tareas"),
     emoji(
-      "⚡ Desarrollo de páginas web altamente interactivas y aplicaciones móviles modernas"
-    ),
-    emoji(
       "⚡ Diseño gráfico y creación de interfaces atractivas y funcionales"
       
     )
