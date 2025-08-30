@@ -37,7 +37,7 @@ const socialMediaLinks = {
   linkedin: "https://www.linkedin.com/",
   gmail: "cirottidev@gmail.com",
   gitlab: "https://gitlab.com/cirotti",
-  medium: "https://medium.com/@saadpasta",
+  medium: "https://medium.com/",
   stackoverflow: "https://stackoverflow.com/users/31382362/cirotti",
   // To customize icons and social links, tweak src/components/SocialMedia
   display: true // Set true to display this section, defaults to false
