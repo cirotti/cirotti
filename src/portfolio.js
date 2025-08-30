@@ -272,15 +272,15 @@ const achievementSection = {
       ]
     },
     {
-      title: "Google Assistant Action",
+      title: "Aplicaciones Móviles",
       subtitle:
-        "Developed a Google Assistant Action JavaScript Guru that is available on 2 Billion devices world wide.",
+        "Desarrollo de aplicaciones móviles híbridas y nativas para Android e iOS.",
       image: require("./assets/images/ONKJC00.jpg"),
       imageAlt: "Google Assistant Action Logo",
       footerLink: [
         {
           name: "View Google Assistant Action",
-          url: "https://assistant.google.com/services/a/uid/000000100ee688ee?hl=en"
+          url: ""
         }
       ]
     },
@@ -294,7 +294,7 @@ const achievementSection = {
         {name: "Certification", url: ""},
         {
           name: "Final Project",
-          url: "https://pakistan-olx-1.firebaseapp.com/"
+          url: ""
         }
       ]
     }
