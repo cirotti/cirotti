@@ -263,11 +263,11 @@ const achievementSection = {
         },
         {
           name: "",
-          url: "https://drive.google.com/file/d/0B7kazrtMwm5dekxBTW5hQkg2WXUyR3QzQmR0VERiLXlGRVdF/view?usp=sharing"
+          url: ""
         },
         {
           name: "",
-          url: "https://opensource.googleblog.com/2019/01/google-code-in-2018-winners.html"
+          url: ""
         }
       ]
     },
