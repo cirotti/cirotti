@@ -1,6 +1,6 @@
 # Portafolio
 
-¡Hola! 👋 Soy Claudio, un apasionado desarrollador de software full stack 🚀.  
+¡Hola! 👋 Soy Cirotti, un apasionado desarrollador de software full stack 🚀.  
 Esta es mi web personal donde muestro mis proyectos, habilidades y trabajos relacionados con **desarrollo web, aplicaciones móviles, diseño gráfico y bots para múltiples plataformas**.
 
 ## 🌟 Tecnologías que uso
