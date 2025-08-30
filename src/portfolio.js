@@ -207,13 +207,13 @@ const bigProjects = {
       ]
     },
     {
-      image: require("./assets/images/nextuLogo.webp"),
-      projectName: "Nextu",
-      projectDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      image: require("./assets/images/El-parche-rp.png"),
+      projectName: "ParcheRP",
+      projectDesc: "Diseñé y desarrollé la página oficial del servidor Parche RP, un proyecto enfocado en la comunidad de GTA Roleplay.",
       footerLink: [
         {
           name: "Visitar Website",
-          url: "http://nextu.se/"
+          url: "https://parche-rp.vercel.app"
         }
       ]
     }
