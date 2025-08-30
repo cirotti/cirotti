@@ -145,14 +145,14 @@ const workExperiences = {
   display: true, //Set it to true to show workExperiences Section
   experience: [
     {
-      role: "Software Engineer",
-      company: "Facebook",
-      companylogo: require("./assets/images/facebookLogo.png"),
-      date: "June 2018 – Present",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      role: "Bot Developer",
+      company: "Bots Multi-Plataforma",
+      companylogo: require("./assets/images/robotlogo.png"),
+      date: "Ene 2023 – Presente",
+      desc: "Creación de bots inteligentes para automatización, moderación y respuestas en Discord, Telegram y WhatsApp.",
       descBullets: [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+        "Comandos personalizados y moderación avanzada.",
+        "Integración con APIs y respuestas automáticas."
       ]
     },
     {
@@ -183,17 +183,17 @@ const openSource = {
 // Some big projects you have worked on
 
 const bigProjects = {
-  title: "Big Projects",
-  subtitle: "SOME STARTUPS AND COMPANIES THAT I HELPED TO CREATE THEIR TECH",
+  title: "Grandes Proyectos",
+  subtitle: "Algunas startups y empresas para las que desarrollé sitios web y soluciones digitales",
   projects: [
     {
-      image: require("./assets/images/saayaHealthLogo.webp"),
-      projectName: "Saayahealth",
-      projectDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      image: require("./assets/images/UrbanDF.png"),
+      projectName: "Urban Design (No terminada)",
+      projectDesc: "Diseñé y desarrollé un sitio moderno y minimalista para una marca urbana, optimizado para una experiencia fluida y adaptable a todos los dispositivos.",
       footerLink: [
         {
-          name: "Visit Website",
-          url: "http://saayahealth.com/"
+          name: "Visitar Website",
+          url: "https://urban-df-dd7f67.webflow.io"
         }
         //  you can add extra buttons here.
       ]
@@ -258,8 +258,8 @@ const achievementSection = {
     },
 
     {
-      title: "PWA Web App Developer",
-      subtitle: "Completed Certifcation from SMIT for PWA Web App Development",
+      title: "Desarrollador de Bots para Múltiples Plataformas",
+      subtitle: "Automatización inteligente: desarrollo de bots personalizados para diversas plataformas",
       image: require("./assets/images/rbots.jpg"),
       imageAlt: "PWA Logo",
       footerLink: [
@@ -277,22 +277,22 @@ const achievementSection = {
 // Blogs Section
 
 const blogSection = {
-  title: "Blogs",
+  title: "Cómo estructurar un proyecto profesional en React",
   subtitle:
-    "With Love for Developing cool stuff, I love to write and teach others what I have learnt.",
+    "Aprende a organizar tu proyecto para que sea escalable, mantenible y fácil de entender.",
   displayMediumBlogs: "true", // Set true to display fetched medium blogs instead of hardcoded ones
   blogs: [
     {
-      url: "https://blog.usejournal.com/create-a-google-assistant-action-and-win-a-google-t-shirt-and-cloud-credits-4a8d86d76eae",
-      title: "Win a Google Assistant Tshirt and $200 in Google Cloud Credits",
+      url: "https://www.netguru.com/blog/react-project-structure?utm_source=chatgpt.com",
+      title: "¿Te pierdes entre componentes y carpetas?",
       description:
-        "Do you want to win $200 and Google Assistant Tshirt by creating a Google Assistant Action in less then 30 min?"
+        "Descubre la mejor manera de organizar tu código para que sea escalable, mantenible y fácil de entender en proyectos reales."
     },
     {
-      url: "https://medium.com/@saadpasta/why-react-is-the-best-5a97563f423e",
-      title: "Why REACT is The Best?",
+      url: "https://www.peerbits.com/blog/reasons-to-choose-reactjs-for-your-web-development-project.html?utm_source=chatgpt.com",
+      title: "¿Por qué React es el mejor?",
       description:
-        "React is a JavaScript library for building User Interface. It is maintained by Facebook and a community of individual developers and companies."
+        "React es una librería de JavaScript para construir interfaces de usuario. Es mantenida por Facebook y una comunidad de desarrolladores y empresas."
     }
   ],
   display: true // Set false to hide this section, defaults to true
