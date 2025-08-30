@@ -156,18 +156,26 @@ const workExperiences = {
       ]
     },
     {
-      role: "Front-End Developer",
-      company: "Quora",
-      companylogo: require("./assets/images/quoraLogo.png"),
-      date: "May 2017 – May 2018",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      role: "Proyectos Freelance",
+      company: "Front-End Developer",
+      companylogo: require("./assets/images/web-development.png"),
+      date: "2022 – Presente",
+      desc: "Creación de sitios web profesionales, responsivos y optimizados para SEO utilizando React, Tailwind y buenas prácticas de UI/UX.",
+          descBullets: [
+        "Webs rápidas y optimizadas.",
+        "Experiencia de usuario intuitiva."
+      ]
     },
     {
-      role: "Software Engineer Intern",
-      company: "Airbnb",
-      companylogo: require("./assets/images/airbnbLogo.png"),
-      date: "Jan 2015 – Sep 2015",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      role: "API & Automation Developer",
+      company: "Soluciones Automatizadas",
+      companylogo: require("./assets/images/api-automation-testing (1).png"),
+      date: "2021 – Presente",
+      desc: "Integración de APIs, desarrollo de scripts y automatización de procesos para empresas y proyectos personales.",
+                descBullets: [
+        "Conexión entre plataformas.",
+        "Automatización eficiente y escalable."
+      ]
     }
   ]
 };
@@ -204,7 +212,7 @@ const bigProjects = {
       projectDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
       footerLink: [
         {
-          name: "Visit Website",
+          name: "Visitar Website",
           url: "http://nextu.se/"
         }
       ]
@@ -231,14 +239,14 @@ const achievementSection = {
       footerLink: [
         {
           name: "Ver Proyectos",
-          url: "https://tu-portafolio.com"
-        },
-        {
-          name: "Award Letter",
           url: ""
         },
         {
-          name: "Google Code-in Blog",
+          name: "Cotizar Ahora",
+          url: ""
+        },
+        {
+          name: "Saber Más",
           url: ""
         }
       ]
@@ -251,7 +259,7 @@ const achievementSection = {
       imageAlt: "Google Assistant Action Logo",
       footerLink: [
         {
-          name: "View Google Assistant Action",
+          name: "Cotizar Aplicación",
           url: ""
         }
       ]
@@ -263,9 +271,9 @@ const achievementSection = {
       image: require("./assets/images/rbots.jpg"),
       imageAlt: "PWA Logo",
       footerLink: [
-        {name: "Certification", url: ""},
+        {name: "Ver Bots Creados", url: ""},
         {
-          name: "Final Project",
+          name: "Hablar por WhatsApp",
           url: ""
         }
       ]
