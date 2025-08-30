@@ -245,9 +245,8 @@ const bigProjects = {
 // Include certificates, talks etc
 
 const achievementSection = {
-  title: emoji("Achievements And Certifications 🏆 "),
-  subtitle:
-    "Achievements, Certifications, Award Letters and Some Cool Stuff that I have done !",
+title: emoji("¡Mis Servicios! 🚀"),
+subtitle: "Transforma tus ideas en realidad: webs, apps, diseño y automatización.",
 
   achievementsCards: [
     {
