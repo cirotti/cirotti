@@ -47,7 +47,7 @@ const socialMediaLinks = {
 // Skills Section
 
 const skillsSection = {
-  title: "Lo que hago",
+  title: "What I do",
   subTitle: "DESARROLLADOR FULL STACK APASIONADO POR WEB, MÓVIL, DISEÑO Y BOTS",
   skills: [
     emoji(
