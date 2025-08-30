@@ -47,23 +47,17 @@ const socialMediaLinks = {
 // Skills Section
 
 const skillsSection = {
-    title: "Lo que hago",
-  subTitle: "DESARROLLADOR FULL STACK APASIONADO POR WEB, MÓVIL, DISEÑO Y BOTS",
+  title: "What I do",
+  subTitle: "CRAZY FULL STACK DEVELOPER WHO WANTS TO EXPLORE EVERY TECH STACK",
   skills: [
     emoji(
-      "⚡ Desarrollo de páginas web altamente interactivas y aplicaciones móviles modernas"
+      "⚡ Develop highly interactive Front end / User Interfaces for your web and mobile applications"
     ),
+    emoji("⚡ Progressive Web Applications ( PWA ) in normal and SPA Stacks"),
     emoji(
-      "⚡ Creación de bots para múltiples plataformas y automatización de tareas"
-    ),
-    emoji(
-      "⚡ Diseño gráfico y creación de interfaces atractivas y funcionales"
-    ),
-    emoji(
-      "⚡ Integración de servicios de terceros como Firebase, AWS y Digital Ocean"
+      "⚡ Integration of third party services such as Firebase/ AWS / Digital Ocean"
     )
   ],
-
 
   /* Make Sure to include correct Font Awesome Classname to view your icon
 https://fontawesome.com/icons?d=gallery */
