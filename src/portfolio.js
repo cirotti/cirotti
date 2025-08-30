@@ -256,14 +256,22 @@ const achievementSection = {
         "Creación de sitios web modernos, responsivos y optimizados con tecnologías actuales.",
       image: require("./assets/images/codeInLogo.webp"),
       imageAlt: "Google Code-In Logo",
-    footerLink: [
-      {
-        name: "Ver Proyectos",
-        url: "https://tu-portafolio.com"
-      }
-    ]
-  },
-  {
+      footerLink: [
+        {
+          name: "Ver Proyectos",
+          url: "https://tu-portafolio.com"
+        },
+        {
+          name: "Award Letter",
+          url: "https://drive.google.com/file/d/0B7kazrtMwm5dekxBTW5hQkg2WXUyR3QzQmR0VERiLXlGRVdF/view?usp=sharing"
+        },
+        {
+          name: "Google Code-in Blog",
+          url: "https://opensource.googleblog.com/2019/01/google-code-in-2018-winners.html"
+        }
+      ]
+    },
+    {
       title: "Google Assistant Action",
       subtitle:
         "Developed a Google Assistant Action JavaScript Guru that is available on 2 Billion devices world wide.",
