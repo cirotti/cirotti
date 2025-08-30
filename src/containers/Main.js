@@ -58,7 +58,6 @@ const Main = () => {
             <StartupProject />
             <Achievement />
             <Blogs />
-            <Talks />
             <Twitter />
             <Profile />
             <Footer />
