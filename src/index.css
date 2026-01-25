@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 20%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 100%;
+
+    --radius: 0px;
+
+    /* Custom tokens */
+    --glitch-color-1: 0 0% 100%;
+    --glitch-color-2: 0 0% 50%;
+    --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+}
+
+@layer components {
+  /* Glitch Text Effect */
+  .glitch {
+    position: relative;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+
+  .glitch::before {
+    animation: glitch-1 2.5s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translateX(-2px);
+    color: hsl(var(--glitch-color-2));
+  }
+
+  .glitch::after {
+    animation: glitch-2 2.5s infinite linear alternate-reverse;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translateX(2px);
+    color: hsl(var(--glitch-color-2));
+  }
+
+  .glitch:hover::before,
+  .glitch:hover::after {
+    opacity: 1;
+  }
+
+  /* Smooth link underline */
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: hsl(var(--foreground));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--transition-smooth);
+  }
+
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* GPU-accelerated elements */
+  .gpu-accelerated {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Noise overlay */
+  .noise-overlay::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 9999;
+  }
+
+  /* Magnetic button */
+  .magnetic-btn {
+    @apply relative overflow-hidden;
+    transition: transform 0.3s var(--transition-smooth);
+  }
+
+  .magnetic-btn::before {
+    content: '';
+    @apply absolute inset-0 bg-foreground;
+    transform: translateY(100%);
+    transition: transform 0.4s var(--transition-smooth);
+  }
+
+  .magnetic-btn:hover::before {
+    transform: translateY(0);
+  }
+
+  .magnetic-btn span {
+    @apply relative z-10 block;
+    transition: color 0.3s var(--transition-smooth);
+  }
+
+  .magnetic-btn:hover span {
+    @apply text-background;
+  }
+
+  /* Section reveal */
+  .reveal-section {
+    @apply opacity-0;
+    transform: translateY(60px);
+  }
+
+  /* Horizontal scroll line */
+  .scroll-line {
+    @apply fixed bottom-8 left-8 w-px bg-muted-foreground/30;
+    height: 80px;
+    z-index: 50;
+  }
+
+  .scroll-line::after {
+    content: '';
+    @apply absolute top-0 left-0 w-full bg-foreground;
+    height: var(--scroll-progress, 0%);
+    transition: height 0.1s linear;
+  }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 1px hsl(var(--foreground));
+    color: transparent;
+  }
+
+  .mono {
+    font-family: 'Space Mono', monospace;
+  }
+}
+
+/* Glitch animations */
+@keyframes glitch-1 {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  7%, 9% {
+    opacity: 1;
+    transform: translateX(-3px) skewX(-1deg);
+  }
+  10% {
+    opacity: 0;
+  }
+  47%, 49% {
+    opacity: 1;
+    transform: translateX(3px) skewX(1deg);
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes glitch-2 {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  27%, 29% {
+    opacity: 1;
+    transform: translateX(3px) skewX(1deg);
+  }
+  30% {
+    opacity: 0;
+  }
+  77%, 79% {
+    opacity: 1;
+    transform: translateX(-3px) skewX(-1deg);
+  }
+  80% {
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Scroll indicator animation */
+.animate-scroll-line {
+  animation: scroll-line 2s ease-in-out infinite;
+}
+
+/* Writing mode for vertical text */
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Smooth scroll performance */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
