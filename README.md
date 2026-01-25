@@ -1,11 +1,12 @@
 # Glitch
+
+![Preview](./preview_live.gif)
+
+***[Click here for Live Demo](https://iamovi.github.io/glitch)***
+
 ## A Portfolio Template
 
 A high-performance, creative portfolio template built with React, Vite, and GSAP. Designed for developers and creatives who want a bold, immersive digital presence.
-
-![Preview](./preview.png)
-
-***[Click here for Live Demo](https://iamovi.github.io/glitch)***
 
 ## Tech Stack
 
