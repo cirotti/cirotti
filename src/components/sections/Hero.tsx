@@ -48,6 +48,13 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
           opacity: 0,
           duration: 0.6,
         }, '-=0.8')
+        // Avatar
+        .from(containerRef.current?.querySelector('.avatar-container') || null, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'back.out(1.7)',
+        }, '-=0.8')
         // Title characters
         .from(titleRef.current?.querySelectorAll('.char') || [], {
           y: 120,
@@ -95,17 +102,31 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
           Creative Developer
         </p>
 
-        <h1
-          ref={titleRef}
-          className="text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter mb-8"
-        >
-          <span className="block overflow-hidden py-2">
-            {splitText('Ovi')}
-          </span>
-          <span className="block overflow-hidden py-2">
-            <GlitchText text="ren" className="text-stroke" />
-          </span>
-        </h1>
+        <div className="flex flex-col md:flex-row items-center gap-12 mb-8">
+          <div className="flex flex-col items-start">
+            <h1
+              ref={titleRef}
+              className="text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter"
+            >
+              <span className="block overflow-hidden py-2">
+                {splitText('Ovi')}
+              </span>
+              <span className="block overflow-hidden py-2">
+                <GlitchText text="ren" className="text-stroke" />
+              </span>
+            </h1>
+          </div>
+
+          <div className="avatar-container relative w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 shrink-0 overflow-hidden border border-muted-foreground/20 gpu-accelerated group">
+            <img
+              src={`${import.meta.env.BASE_URL}avatar.jpg`}
+              alt="Avatar"
+              className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-primary/10 mix-blend-overlay pointer-events-none" />
+            <div className="absolute inset-0 border border-foreground/20 pointer-events-none" />
+          </div>
+        </div>
 
         <p
           ref={subtitleRef}
