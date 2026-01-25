@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import gsap from 'gsap';
 import GlitchText from '../GlitchText';
 import MagneticButton from '../MagneticButton';
@@ -7,14 +7,25 @@ interface HeroProps {
   isLoaded?: boolean;
 }
 
-const Hero = ({ isLoaded = true }: HeroProps) => {
+const splitText = (text: string) => {
+  return text.split('').map((char, i) => (
+    <span
+      key={i}
+      className="char inline-block gpu-accelerated"
+      style={{ perspective: '1000px' }}
+    >
+      {char === ' ' ? '\u00A0' : char}
+    </span>
+  ));
+};
+
+const Hero = memo(({ isLoaded = true }: HeroProps) => {
   const containerRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
-
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -65,18 +76,6 @@ const Hero = ({ isLoaded = true }: HeroProps) => {
     return () => ctx.revert();
   }, [isLoaded]);
 
-  const splitText = (text: string) => {
-    return text.split('').map((char, i) => (
-      <span
-        key={i}
-        className="char inline-block gpu-accelerated"
-        style={{ perspective: '1000px' }}
-      >
-        {char === ' ' ? '\u00A0' : char}
-      </span>
-    ));
-  };
-
   return (
     <section
       ref={containerRef}
@@ -125,13 +124,12 @@ const Hero = ({ isLoaded = true }: HeroProps) => {
         </div>
       </div>
 
-
-
       {/* Decorative corner elements */}
       <div className="absolute top-8 right-8 w-16 h-16 border-t border-r border-muted-foreground/20" />
       <div className="absolute bottom-8 left-8 w-16 h-16 border-b border-l border-muted-foreground/20 hidden md:block" />
     </section>
   );
-};
+});
 
+Hero.displayName = 'Hero';
 export default Hero;

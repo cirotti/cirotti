@@ -6,6 +6,43 @@
 
 @layer base {
   :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 0% 90%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
+
+    --radius: 0px;
+
+    /* Custom tokens */
+    --glitch-color-1: 0 0% 0%;
+    --glitch-color-2: 0 0% 40%;
+    --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
@@ -34,12 +71,8 @@
     --input: 0 0% 20%;
     --ring: 0 0% 100%;
 
-    --radius: 0px;
-
-    /* Custom tokens */
     --glitch-color-1: 0 0% 100%;
     --glitch-color-2: 0 0% 50%;
-    --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
@@ -48,9 +81,50 @@
     @apply border-border;
   }
 
+  /* Target transitions only where needed for theme switching */
+  body,
+  .noise-overlay,
+  nav,
+  section,
+  div[class*="bg-"],
+  span[class*="text-"],
+  p[class*="text-"],
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 transition-colors;
+    border-radius: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
   }
 
   body {
@@ -65,6 +139,7 @@
 }
 
 @layer components {
+
   /* Glitch Text Effect */
   .glitch {
     position: relative;
@@ -205,42 +280,58 @@
 
 /* Glitch animations */
 @keyframes glitch-1 {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0;
     transform: translateX(0);
   }
-  7%, 9% {
+
+  7%,
+  9% {
     opacity: 1;
     transform: translateX(-3px) skewX(-1deg);
   }
+
   10% {
     opacity: 0;
   }
-  47%, 49% {
+
+  47%,
+  49% {
     opacity: 1;
     transform: translateX(3px) skewX(1deg);
   }
+
   50% {
     opacity: 0;
   }
 }
 
 @keyframes glitch-2 {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0;
     transform: translateX(0);
   }
-  27%, 29% {
+
+  27%,
+  29% {
     opacity: 1;
     transform: translateX(3px) skewX(1deg);
   }
+
   30% {
     opacity: 0;
   }
-  77%, 79% {
+
+  77%,
+  79% {
     opacity: 1;
     transform: translateX(-3px) skewX(-1deg);
   }
+
   80% {
     opacity: 0;
   }
@@ -250,9 +341,11 @@
   0% {
     transform: translateY(-100%);
   }
+
   50% {
     transform: translateY(0%);
   }
+
   100% {
     transform: translateY(100%);
   }

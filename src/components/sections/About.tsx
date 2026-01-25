@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const About = () => {
+const About = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
@@ -142,6 +142,7 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
 
+About.displayName = 'About';
 export default About;

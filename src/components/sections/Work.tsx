@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github } from 'lucide-react';
@@ -58,7 +58,8 @@ const projects: Project[] = [
     githubUrl: 'https://github.com/iamovi/MyWebJourney',
   },
 ];
-const Work = () => {
+
+const Work = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
@@ -83,38 +84,45 @@ const Work = () => {
       if (items) {
         items.forEach((item) => {
           const title = item.querySelector('.project-title');
-          const meta = item.querySelector('.project-meta');
           const line = item.querySelector('.project-line');
           const arrow = item.querySelector('.project-arrow');
 
           // Entry animation
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          });
-
-          tl.from(item, {
+          gsap.from(item, {
             y: 40,
             opacity: 0,
             duration: 0.8,
             ease: 'power3.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+              fastScrollEnd: true,
+            },
           });
 
-          // Hover animations
-          item.addEventListener('mouseenter', () => {
-            gsap.to(line, { scaleX: 1, duration: 0.5, ease: 'power3.out' });
-            gsap.to(title, { x: 20, duration: 0.4, ease: 'power3.out' });
-            gsap.to(arrow, { x: 0, opacity: 1, duration: 0.4, ease: 'power3.out' });
-          });
+          // Hover handlers using GSAP quickTo for performance
+          const xToTitle = gsap.quickTo(title, "x", { duration: 0.4, ease: "power3.out" });
+          const scaleToLine = gsap.quickTo(line, "scaleX", { duration: 0.5, ease: "power3.out" });
+          const xToArrow = gsap.quickTo(arrow, "x", { duration: 0.4, ease: "power3.out" });
+          const opacityToArrow = gsap.quickTo(arrow, "opacity", { duration: 0.4, ease: "power3.out" });
 
-          item.addEventListener('mouseleave', () => {
-            gsap.to(line, { scaleX: 0, duration: 0.5, ease: 'power3.out' });
-            gsap.to(title, { x: 0, duration: 0.4, ease: 'power3.out' });
-            gsap.to(arrow, { x: -20, opacity: 0, duration: 0.4, ease: 'power3.out' });
-          });
+          const onEnter = () => {
+            scaleToLine(1);
+            xToTitle(20);
+            xToArrow(0);
+            opacityToArrow(1);
+          };
+
+          const onLeave = () => {
+            scaleToLine(0);
+            xToTitle(0);
+            xToArrow(-20);
+            opacityToArrow(0);
+          };
+
+          item.addEventListener('mouseenter', onEnter);
+          item.addEventListener('mouseleave', onLeave);
         });
       }
     }, sectionRef);
@@ -211,6 +219,7 @@ const Work = () => {
       </div>
     </section>
   );
-};
+});
 
+Work.displayName = 'Work';
 export default Work;

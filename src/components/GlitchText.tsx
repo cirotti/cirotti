@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, memo } from 'react';
 import gsap from 'gsap';
 
 interface GlitchTextProps {
@@ -7,7 +7,7 @@ interface GlitchTextProps {
   as?: 'h1' | 'h2' | 'h3' | 'span' | 'p';
 }
 
-const GlitchText = ({ text, className = '', as: Component = 'span' }: GlitchTextProps) => {
+const GlitchText = memo(({ text, className = '', as: Component = 'span' }: GlitchTextProps) => {
   const textRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const GlitchText = ({ text, className = '', as: Component = 'span' }: GlitchText
       {text}
     </Component>
   );
-};
+});
 
+GlitchText.displayName = 'GlitchText';
 export default GlitchText;

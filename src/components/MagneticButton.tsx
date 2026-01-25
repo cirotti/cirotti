@@ -1,4 +1,4 @@
-import { useRef, useEffect, ReactNode } from 'react';
+import { useRef, useEffect, ReactNode, memo } from 'react';
 import gsap from 'gsap';
 
 interface MagneticButtonProps {
@@ -8,7 +8,7 @@ interface MagneticButtonProps {
   href?: string;
 }
 
-const MagneticButton = ({ children, className = '', onClick, href }: MagneticButtonProps) => {
+const MagneticButton = memo(({ children, className = '', onClick, href }: MagneticButtonProps) => {
   const buttonRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
   const boundingRef = useRef<DOMRect | null>(null);
 
@@ -16,25 +16,24 @@ const MagneticButton = ({ children, className = '', onClick, href }: MagneticBut
     const button = buttonRef.current;
     if (!button) return;
 
+    const xTo = gsap.quickTo(button, "x", { duration: 0.3, ease: 'power2.out' });
+    const yTo = gsap.quickTo(button, "y", { duration: 0.3, ease: 'power2.out' });
+
     const handleMouseEnter = () => {
       boundingRef.current = button.getBoundingClientRect();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!boundingRef.current) return;
-      
+
       const { clientX, clientY } = e;
       const { left, top, width, height } = boundingRef.current;
-      
+
       const x = (clientX - left - width / 2) * 0.3;
       const y = (clientY - top - height / 2) * 0.3;
 
-      gsap.to(button, {
-        x,
-        y,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
+      xTo(x);
+      yTo(y);
     };
 
     const handleMouseLeave = () => {
@@ -55,6 +54,7 @@ const MagneticButton = ({ children, className = '', onClick, href }: MagneticBut
       button.removeEventListener('mouseenter', handleMouseEnter);
       button.removeEventListener('mousemove', handleMouseMove);
       button.removeEventListener('mouseleave', handleMouseLeave);
+      gsap.killTweensOf(button);
     };
   }, []);
 
@@ -83,6 +83,7 @@ const MagneticButton = ({ children, className = '', onClick, href }: MagneticBut
       <span>{children}</span>
     </button>
   );
-};
+});
 
+MagneticButton.displayName = 'MagneticButton';
 export default MagneticButton;

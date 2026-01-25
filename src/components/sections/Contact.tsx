@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import GlitchText from '../GlitchText';
@@ -6,7 +6,7 @@ import MagneticButton from '../MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Contact = () => {
+const Contact = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
@@ -132,6 +132,7 @@ const Contact = () => {
       </footer>
     </section>
   );
-};
+});
 
+Contact.displayName = 'Contact';
 export default Contact;
