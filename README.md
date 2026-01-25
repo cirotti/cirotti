@@ -38,7 +38,7 @@ A high-performance, creative portfolio template built with React, Vite, and GSAP
 
 1. Clone the repository:
    ```bash
-   git clone <this-repo-url>
+   git clone https://github.com/iamovi/glitch.git
    ```
 
 2. Install dependencies:

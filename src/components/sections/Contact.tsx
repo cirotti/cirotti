@@ -105,8 +105,8 @@ const Contact = memo(() => {
         </h2>
 
         <div className="flex flex-col md:flex-row md:items-center gap-8 mb-16">
-          <MagneticButton href="mailto:fornet.ovi@gmail.com">
-            fornet.ovi@gmail.com
+          <MagneticButton href="mailto:init.ovi@gmail.com">
+            init.ovi@gmail.com
           </MagneticButton>
         </div>
 
