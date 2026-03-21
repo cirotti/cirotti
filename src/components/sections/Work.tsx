@@ -22,8 +22,8 @@ const projects: Project[] = [
     categoria: "Librería",
     anio: "2026",
     descripcion: "Librería CSS para animaciones de botones y texto.",
-    githubUrl: "https://github.com/iamovi/ani.css",
-    projectUrl: "https://github.com/iamovi/ani.css",
+    githubUrl: "https://github.com/iamovi/",
+    projectUrl: "https://github.com/iamovi/",
     image: `${import.meta.env.BASE_URL}scatelier.png`,
   },
 {
