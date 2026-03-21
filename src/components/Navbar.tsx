@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import GlitchText from './GlitchText';
 import ThemeToggle from './ThemeToggle';
 
 interface NavbarProps {
@@ -9,9 +8,10 @@ interface NavbarProps {
 
 const Navbar = ({ isLoaded = true }: NavbarProps) => {
   const navRef = useRef<HTMLElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoaded || !navRef.current) return;
@@ -29,7 +29,7 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
     if (!isOpen || !menuRef.current) return;
 
     const links = menuRef.current.querySelectorAll('.menu-link');
-    if (links.length === 0) return;
+    if (!links.length) return;
 
     gsap.from(links, {
       y: 60,
@@ -41,9 +41,9 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
   }, [isOpen]);
 
   const navLinks = [
-    { label: 'About', href: '#about' },
-    { label: 'Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Sobre Mi', href: '#about' },
+    { label: 'Proyectos', href: '#work' },
+    { label: 'Contacto', href: '#contact' },
   ];
 
   const handleNavClick = (href: string) => {
@@ -58,8 +58,29 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
         className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 lg:px-24 py-6 bg-background/50 backdrop-blur-md"
         style={{ opacity: isLoaded ? 1 : 0 }}
       >
-        <a href="#" className="text-foreground transition-colors">
-          <GlitchText text="Ov" className="text-xl font-bold" />
+        {/* Logo / hover text style Dennis */}
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="group relative inline-flex items-center overflow-hidden text-foreground"
+          aria-label="Ir al inicio"
+        >
+          <span className="relative block h-6 md:h-7 overflow-hidden">
+            <span className="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">
+              <span className="font-bold text-xl tracking-tight">
+                Code By Cirotti
+              </span>
+            </span>
+
+            <span className="absolute left-0 top-full block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">
+              <span className="font-bold text-xl tracking-tight whitespace-nowrap">
+                Portafolio
+              </span>
+            </span>
+          </span>
         </a>
 
         {/* Desktop Nav */}
@@ -85,16 +106,19 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-6 h-px bg-foreground transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-[3px]' : ''
-                }`}
+              className={`block w-6 h-px bg-foreground transition-transform duration-300 ${
+                isOpen ? 'rotate-45 translate-y-[3px]' : ''
+              }`}
             />
             <span
-              className={`block w-6 h-px bg-foreground transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''
-                }`}
+              className={`block w-6 h-px bg-foreground transition-opacity duration-300 ${
+                isOpen ? 'opacity-0' : ''
+              }`}
             />
             <span
-              className={`block w-6 h-px bg-foreground transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-[5px]' : ''
-                }`}
+              className={`block w-6 h-px bg-foreground transition-transform duration-300 ${
+                isOpen ? '-rotate-45 -translate-y-[5px]' : ''
+              }`}
             />
           </button>
         </div>
@@ -103,8 +127,9 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
       {/* Mobile Menu */}
       <div
         ref={menuRef}
-        className={`fixed inset-0 bg-background z-40 flex flex-col justify-center items-center gap-8 transition-opacity duration-500 md:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`fixed inset-0 bg-background z-40 flex flex-col justify-center items-center gap-8 transition-opacity duration-500 md:hidden ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
       >
         {navLinks.map((link) => (
           <button
@@ -112,7 +137,7 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
             onClick={() => handleNavClick(link.href)}
             className="menu-link text-4xl font-bold"
           >
-            <GlitchText text={link.label} />
+            {link.label}
           </button>
         ))}
       </div>
