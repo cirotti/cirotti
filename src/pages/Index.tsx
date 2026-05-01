@@ -3,6 +3,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
+import Process from "@/components/sections/Process"
+import WhyMe from "@/components/sections/WhyMe"
 import ScrollProgress from '@/components/ScrollProgress';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
@@ -69,6 +71,8 @@ const Index = () => {
           <Hero isLoaded={isLoaded} />
           <About />
           <Work />
+          <Process />
+          <WhyMe />
           <Contact />
         </main>
       </div>
