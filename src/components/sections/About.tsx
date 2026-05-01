@@ -1,4 +1,4 @@
-import { useEffect, useRef, memo } from "react"
+import { useEffect, useMemo, useRef, memo } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import {
@@ -9,172 +9,177 @@ import {
   ArrowUpRight,
   Bot,
   AppWindow,
+  TerminalSquare,
+  Cpu,
+  Globe2,
+  Zap,
+  Radio,
+  Layers3,
+  Orbit,
+  MousePointer2,
+  ShieldCheck,
+  Command,
+  Network,
+  Fingerprint,
+  Braces,
 } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
 const skills = [
-  "Desarrollo Backend",
-  "Node.js / APIs",
+  "Backend & APIs",
+  "Node.js",
   "Python",
-  "Apps Full-Stack",
-  "Bots para Discord",
-  "Bots para WhatsApp / Telegram",
+  "React / Next.js",
+  "Bots Discord",
+  "Bots WhatsApp / Telegram",
+  "Automatizaciones",
   "Arquitectura Web",
-  "Open Source",
+]
+
+const focus = [
+  {
+    icon: Bot,
+    title: "Bots inteligentes",
+    text: "Discord, WhatsApp, Telegram, comandos, paneles y flujos conectados a APIs reales.",
+  },
+  {
+    icon: AppWindow,
+    title: "Apps con identidad",
+    text: "Interfaces modernas, rápidas y visualmente potentes, pensadas para sentirse premium.",
+  },
+  {
+    icon: TerminalSquare,
+    title: "Sistemas funcionales",
+    text: "Backend, bases de datos, lógica de negocio y herramientas que solucionan problemas reales.",
+  },
 ]
 
 const pillars = [
   {
     icon: Code2,
     title: "Código con intención",
-    text: "Cada interfaz, app o sistema debe comunicar presencia, claridad y personalidad.",
+    text: "Cada sección, animación y flujo tiene una razón. Nada está puesto porque sí.",
   },
   {
     icon: Workflow,
-    title: "Movimiento con propósito",
-    text: "La animación guía, revela y da ritmo a la experiencia sin romper la funcionalidad.",
+    title: "Experiencia con ritmo",
+    text: "Movimiento elegante, jerarquía clara y detalles visuales que acompañan la navegación.",
   },
   {
     icon: Boxes,
-    title: "Sistema visual sólido",
-    text: "Estructura, detalle e identidad trabajando como una sola pieza en webs, apps y productos digitales.",
+    title: "Producto completo",
+    text: "Diseño, estructura, lógica, rendimiento e identidad trabajando como una sola pieza.",
   },
 ]
 
 const About = memo(() => {
   const sectionRef = useRef<HTMLElement>(null)
+  const lightRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  const starFieldRef = useRef<HTMLDivElement>(null)
   const bigTextRef = useRef<HTMLDivElement>(null)
-  const numberRef = useRef<HTMLSpanElement>(null)
-  const glowLeftRef = useRef<HTMLDivElement>(null)
-  const glowRightRef = useRef<HTMLDivElement>(null)
-
-  const railRef = useRef<HTMLDivElement>(null)
-  const labelRef = useRef<HTMLSpanElement>(null)
-  const titleWrapRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const labelRef = useRef<HTMLDivElement>(null)
   const introRef = useRef<HTMLDivElement>(null)
-  const statsRef = useRef<HTMLDivElement>(null)
-
   const cardRef = useRef<HTMLDivElement>(null)
-  const skillsRef = useRef<HTMLUListElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const focusRef = useRef<HTMLDivElement>(null)
+  const skillsRef = useRef<HTMLDivElement>(null)
   const pillarsRef = useRef<HTMLDivElement>(null)
+  const terminalRef = useRef<HTMLDivElement>(null)
+  const systemRef = useRef<HTMLDivElement>(null)
+  const orbitRef = useRef<HTMLDivElement>(null)
+  const nebulaRef = useRef<HTMLDivElement>(null)
+  const constellationRef = useRef<HTMLDivElement>(null)
+  const scanRef = useRef<HTMLDivElement>(null)
+  const pulseRef = useRef<HTMLDivElement>(null)
+
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 95 }, (_, i) => ({
+        id: i,
+        left: `${(i * 17.17 + 9) % 100}%`,
+        top: `${(i * 23.91 + 11) % 100}%`,
+        size: 1 + (i % 4),
+        delay: (i % 13) * 0.16,
+        duration: 2.3 + (i % 9) * 0.34,
+      })),
+    []
+  )
 
   useEffect(() => {
+    const section = sectionRef.current
+    const light = lightRef.current
+
+    const move = (e: MouseEvent) => {
+      if (!section || !light) return
+      const rect = section.getBoundingClientRect()
+
+      gsap.to(light, {
+        x: e.clientX - rect.left - 280,
+        y: e.clientY - rect.top - 280,
+        duration: 0.75,
+        ease: "power3.out",
+      })
+    }
+
+    section?.addEventListener("mousemove", move)
+
     const ctx = gsap.context(() => {
-      gsap.to(numberRef.current, {
-        y: -180,
+      const parallax = {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      }
+
+      gsap.to(gridRef.current, { yPercent: 16, ease: "none", scrollTrigger: parallax })
+      gsap.to(starFieldRef.current, { yPercent: -10, ease: "none", scrollTrigger: parallax })
+      gsap.to(bigTextRef.current, { xPercent: -28, ease: "none", scrollTrigger: parallax })
+      gsap.to(nebulaRef.current, { xPercent: -8, yPercent: 10, ease: "none", scrollTrigger: parallax })
+      gsap.to(constellationRef.current, { yPercent: -12, ease: "none", scrollTrigger: parallax })
+
+      gsap.to(orbitRef.current, {
+        rotate: 360,
+        duration: 44,
         ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+        repeat: -1,
       })
 
-      gsap.to(bigTextRef.current, {
-        xPercent: -20,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+      gsap.to(pulseRef.current, {
+        scale: 1.18,
+        opacity: 0.15,
+        duration: 2.6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
       })
 
-      gsap.to(gridRef.current, {
-        yPercent: 12,
+      gsap.to(scanRef.current, {
+        yPercent: 360,
+        duration: 4.2,
         ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+        repeat: -1,
       })
 
-      gsap.to(glowLeftRef.current, {
-        xPercent: 10,
-        yPercent: -10,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      })
+      const lines = titleRef.current?.querySelectorAll(".about-line")
 
-      gsap.to(glowRightRef.current, {
-        xPercent: -8,
-        yPercent: 10,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      })
-
-      gsap.fromTo(
-        railRef.current,
-        {
-          scaleY: 0,
-          transformOrigin: "top center",
-        },
-        {
-          scaleY: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: railRef.current,
-            start: "top 88%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      )
-
-      gsap.fromTo(
-        labelRef.current,
-        {
-          y: 18,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: labelRef.current,
-            start: "top 92%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      )
-
-      const titleLines =
-        titleWrapRef.current?.querySelectorAll(".about-line-inner")
-
-      if (titleLines?.length) {
+      if (lines?.length) {
         gsap.fromTo(
-          titleLines,
-          {
-            yPercent: 120,
-            opacity: 0,
-          },
+          lines,
+          { yPercent: 120, opacity: 0, rotateX: -80, filter: "blur(14px)" },
           {
             yPercent: 0,
             opacity: 1,
-            stagger: 0.12,
+            rotateX: 0,
+            filter: "blur(0px)",
             duration: 1.15,
+            stagger: 0.075,
             ease: "power4.out",
             scrollTrigger: {
-              trigger: titleWrapRef.current,
-              start: "top 82%",
+              trigger: titleRef.current,
+              start: "top 80%",
               toggleActions: "play none none reverse",
             },
           }
@@ -182,401 +187,486 @@ const About = memo(() => {
       }
 
       gsap.fromTo(
-        introRef.current,
-        {
-          y: 34,
-          opacity: 0,
-        },
+        [labelRef.current, introRef.current, cardRef.current, systemRef.current],
+        { y: 44, opacity: 0, filter: "blur(18px)" },
         {
           y: 0,
           opacity: 1,
-          duration: 0.95,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: introRef.current,
-            start: "top 88%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      )
-
-      gsap.fromTo(
-        statsRef.current?.children || [],
-        {
-          y: 22,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.08,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      )
-
-      gsap.fromTo(
-        cardRef.current,
-        {
-          y: 42,
-          opacity: 0,
-          scale: 0.98,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
+          filter: "blur(0px)",
+          stagger: 0.12,
           duration: 1,
           ease: "power4.out",
           scrollTrigger: {
-            trigger: cardRef.current,
-            start: "top 88%",
+            trigger: sectionRef.current,
+            start: "top 74%",
             toggleActions: "play none none reverse",
           },
         }
       )
 
-      gsap.fromTo(
-        skillsRef.current?.children || [],
-        {
-          x: -26,
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          stagger: 0.06,
-          duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: skillsRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      )
+      const groups = [
+        statsRef.current?.children,
+        focusRef.current?.children,
+        skillsRef.current?.children,
+        pillarsRef.current?.children,
+        terminalRef.current?.children,
+      ]
 
-      gsap.fromTo(
-        pillarsRef.current?.children || [],
-        {
-          y: 20,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.08,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: pillarsRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      )
+      groups.forEach((group) => {
+        if (!group?.length) return
+
+        gsap.fromTo(
+          group,
+          { y: 28, opacity: 0, filter: "blur(10px)" },
+          {
+            y: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.78,
+            stagger: 0.055,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: group[0],
+              start: "top 91%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        )
+      })
+
+      gsap.to(".about-float", {
+        y: -16,
+        duration: 2.8,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.16,
+      })
+
+      gsap.to(".about-node", {
+        scale: 1.4,
+        opacity: 1,
+        duration: 1.8,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.2,
+      })
     }, sectionRef)
 
-    return () => ctx.revert()
+    return () => {
+      ctx.revert()
+      section?.removeEventListener("mousemove", move)
+    }
   }, [])
 
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="relative overflow-hidden px-6 py-24 md:px-10 md:py-32 lg:px-16 xl:px-24"
+      className="relative isolate overflow-hidden px-5 py-24 text-white sm:px-6 md:px-10 md:py-32 lg:px-16 xl:px-24"
     >
-      {/* GRID */}
+      <div className="absolute inset-0 -z-20 bg-[#030511]" />
+
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_58%_0%,rgba(99,102,241,0.24),transparent_34%),radial-gradient(circle_at_82%_42%,rgba(217,70,239,0.18),transparent_32%),radial-gradient(circle_at_22%_72%,rgba(34,211,238,0.12),transparent_30%),linear-gradient(180deg,rgba(3,5,17,0.02)_0%,rgba(3,5,17,0.4)_45%,rgba(0,0,0,0.88)_100%)]" />
+
+      <div
+        ref={nebulaRef}
+        className="pointer-events-none absolute right-[-18%] top-[-10%] z-[1] h-[48rem] w-[48rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.22),rgba(217,70,239,0.12)_35%,transparent_68%)] blur-[120px]"
+      />
+
       <div
         ref={gridRef}
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.13]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
           backgroundSize: "76px 76px",
-          maskImage:
-            "radial-gradient(circle at center, black 45%, transparent 85%)",
-          WebkitMaskImage:
-            "radial-gradient(circle at center, black 45%, transparent 85%)",
+          maskImage: "radial-gradient(circle at center, black 34%, transparent 82%)",
+          WebkitMaskImage: "radial-gradient(circle at center, black 34%, transparent 82%)",
         }}
       />
 
-      {/* NOISE */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12)_0,transparent_55%)]" />
-
-      {/* BIG BG TEXT */}
       <div
-        ref={bigTextRef}
-        className="pointer-events-none absolute left-[-8%] top-[12%] whitespace-nowrap select-none text-[18vw] font-black leading-none text-white/[0.025]"
-      >
-        ABOUT — ABOUT — SOBRE MÍ — ABOUT
+        ref={lightRef}
+        className="pointer-events-none absolute left-0 top-0 z-[2] h-[560px] w-[560px] rounded-full bg-white/[0.065] blur-[150px]"
+      />
+
+      <div ref={starFieldRef} className="pointer-events-none absolute inset-0 z-[2]">
+        {particles.map((p) => (
+          <span
+            key={p.id}
+            className="absolute rounded-full bg-white/70"
+            style={{
+              left: p.left,
+              top: p.top,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              animation: `pulse ${p.duration}s ease-in-out ${p.delay}s infinite`,
+              boxShadow: "0 0 26px rgba(255,255,255,0.55)",
+            }}
+          />
+        ))}
       </div>
 
-      {/* GLOWS */}
       <div
-        ref={glowLeftRef}
-        className="absolute left-[-10%] top-[8%] h-[28rem] w-[28rem] rounded-full bg-indigo-500/10 blur-[170px]"
-      />
-      <div
-        ref={glowRightRef}
-        className="absolute bottom-[-12%] right-[-8%] h-[26rem] w-[26rem] rounded-full bg-fuchsia-500/10 blur-[160px]"
-      />
-
-      {/* NUMBER */}
-      <span
-        ref={numberRef}
-        className="pointer-events-none absolute left-[-0.5rem] top-[16%] select-none text-[8rem] font-black leading-none text-white/[0.04] sm:text-[10rem] lg:left-[1rem] lg:text-[15rem]"
+        ref={bigTextRef}
+        className="pointer-events-none absolute left-[-48%] top-[7%] z-[1] whitespace-nowrap text-[22vw] font-black uppercase leading-none tracking-[-0.095em] text-white/[0.03] sm:left-[-24%] sm:text-[17vw] lg:left-[-12%] lg:text-[13vw]"
       >
-        01
-      </span>
+        DIGITAL GALAXY — SYSTEMS — BOTS — APPS —
+      </div>
 
-      <div className="relative z-10 mx-auto max-w-[1380px]">
-        <div className="grid gap-12 lg:grid-cols-[88px_minmax(0,1fr)_420px] xl:gap-16">
-          {/* LEFT RAIL */}
-          <div className="hidden lg:flex lg:flex-col lg:items-center lg:justify-between">
-            <div className="font-mono text-[10px] uppercase tracking-[0.44em] text-white/35 [writing-mode:vertical-rl] rotate-180">
-              ABOUT / CREATIVE DEVELOPER / BOTS / APPS / VISUAL THINKING
+      <div
+        ref={constellationRef}
+        className="pointer-events-none absolute right-[2%] top-[8%] z-[2] hidden h-[42rem] w-[42rem] lg:block"
+      >
+        <div className="absolute inset-0 rounded-full border border-white/[0.07]" />
+        <div
+          ref={orbitRef}
+          className="absolute inset-10 rounded-full border border-dashed border-cyan-200/[0.1]"
+        >
+          <span className="about-node absolute left-1/2 top-[-5px] h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-cyan-200 opacity-70 shadow-[0_0_36px_rgba(165,243,252,0.95)]" />
+          <span className="about-node absolute bottom-12 right-12 h-2 w-2 rounded-full bg-fuchsia-200 opacity-70 shadow-[0_0_30px_rgba(245,208,254,0.9)]" />
+          <span className="about-node absolute left-14 top-1/2 h-2 w-2 rounded-full bg-indigo-200 opacity-70 shadow-[0_0_30px_rgba(199,210,254,0.9)]" />
+        </div>
+
+        <div ref={pulseRef} className="absolute inset-28 rounded-full border border-cyan-200/10 bg-cyan-200/[0.03]" />
+
+        <svg className="absolute inset-0 h-full w-full opacity-25" viewBox="0 0 600 600">
+          <path
+            d="M300 60 L470 210 L410 480 L170 430 L120 190 Z"
+            fill="none"
+            stroke="rgba(165,243,252,.45)"
+            strokeWidth="1"
+            strokeDasharray="8 10"
+          />
+          <path
+            d="M300 60 L410 480 M470 210 L170 430 M120 190 L410 480"
+            fill="none"
+            stroke="rgba(240,171,252,.28)"
+            strokeWidth="1"
+          />
+        </svg>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1500px]">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,540px)] xl:gap-16">
+          <div>
+            <div
+              ref={labelRef}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 backdrop-blur-xl"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-cyan-300" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/55">
+                Sobre mí / Digital Galaxy
+              </span>
             </div>
 
             <div
-              ref={railRef}
-              className="mt-8 h-28 w-px bg-gradient-to-b from-white/0 via-white/35 to-white/0"
-            />
-          </div>
-
-          {/* LEFT CONTENT */}
-          <div className="max-w-[920px]">
-            <span
-              ref={labelRef}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.34em] text-white/45 backdrop-blur-xl"
+              ref={titleRef}
+              className="max-w-[1120px] text-[clamp(3rem,6.4vw,7.4rem)] font-black uppercase leading-[0.8] tracking-[-0.085em]"
             >
-              <Sparkles className="h-3.5 w-3.5 text-white/55" />
-              Sobre mí
-            </span>
-
-            <div
-              ref={titleWrapRef}
-              className="text-[clamp(2.4rem,5.4vw,5.7rem)] font-semibold leading-[0.93] tracking-[-0.055em] text-white"
-            >
-              <div className="overflow-hidden">
-                <div className="about-line-inner">No me interesa</div>
-              </div>
-
-              <div className="overflow-hidden">
-                <div className="about-line-inner">
-                  crear productos
-                  <span className="ml-[0.18em] inline-block text-stroke">
-                    normales
-                  </span>
-                </div>
-              </div>
-
-              <div className="overflow-hidden">
-                <div className="about-line-inner">sino experiencias,</div>
-              </div>
-
-              <div className="overflow-hidden">
-                <div className="about-line-inner">apps y bots</div>
-              </div>
-
-              <div className="overflow-hidden">
-                <div className="about-line-inner">que se sientan</div>
-              </div>
-
-              <div className="overflow-hidden">
-                <div className="about-line-inner">vivos, precisos</div>
-              </div>
-
-              <div className="overflow-hidden">
-                <div className="about-line-inner">y memorables.</div>
-              </div>
+              {["No soy un", "creador de", "páginas.", "Soy constructor", "de sistemas", "vivos."].map(
+                (line, index) => (
+                  <div key={line} className="overflow-hidden pb-1">
+                    <div
+                      className={`about-line ${
+                        index >= 3
+                          ? "bg-gradient-to-r from-cyan-200 via-white to-fuchsia-200 bg-clip-text text-transparent"
+                          : ""
+                      }`}
+                    >
+                      {line}
+                    </div>
+                  </div>
+                )
+              )}
             </div>
 
             <div
               ref={introRef}
-              className="mt-8 max-w-[720px] space-y-5 text-sm leading-7 text-white/62 md:text-base"
+              className="mt-8 max-w-[800px] space-y-5 text-sm leading-7 text-white/64 md:text-base"
             >
               <p>
                 Soy <span className="font-semibold text-white">Cirotti</span>,
-                desarrollador creativo enfocado en construir productos digitales
-                donde el diseño, la interacción y el código trabajen como una
-                sola pieza.
+                desarrollador creativo enfocado en crear productos digitales con
+                presencia: webs, apps, bots, automatizaciones y sistemas que no
+                se sienten genéricos.
               </p>
 
               <p>
-                Desarrollo webs con identidad, aplicaciones funcionales y bots
-                hechos a medida para <span className="text-white font-medium">Discord</span>,{" "}
-                <span className="text-white font-medium">WhatsApp</span>,{" "}
-                <span className="text-white font-medium">Telegram</span> y otras
-                plataformas, combinando lógica, automatización y una experiencia
-                visual cuidada.
-              </p>
-
-              <p>
-                Me obsesiona el detalle: el ritmo visual, la jerarquía, el
-                movimiento, la claridad y esa sensación de que cada producto
-                tiene carácter propio.
+                Me gusta unir diseño, lógica y movimiento para que cada producto
+                tenga una identidad propia: visualmente fuerte, funcional y
+                preparado para crecer.
               </p>
             </div>
 
-            <div
-              ref={statsRef}
-              className="mt-10 grid max-w-[760px] gap-3 sm:grid-cols-3"
-            >
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
-                  Enfoque
+            <div ref={statsRef} className="mt-10 grid max-w-[920px] gap-3 sm:grid-cols-3">
+              {[
+                ["Mentalidad", "Diseño + código + negocio"],
+                ["Sistema", "Web · Apps · Bots"],
+                ["Resultado", "Experiencia memorable"],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="about-float group rounded-3xl border border-white/10 bg-white/[0.055] p-5 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.08]"
+                >
+                  <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/35">
+                    {label}
+                  </div>
+                  <div className="mt-3 text-sm font-medium text-white/82">
+                    {value}
+                  </div>
                 </div>
-                <div className="mt-2 text-sm text-white/80">
-                  Web · Apps · Bots
-                </div>
-              </div>
+              ))}
+            </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
-                  Stack
-                </div>
-                <div className="mt-2 text-sm text-white/80">
-                  React · Node · Python · GSAP
-                </div>
-              </div>
+            <div ref={focusRef} className="mt-5 grid max-w-[1000px] gap-3 md:grid-cols-3">
+              {focus.map((item) => {
+                const Icon = item.icon
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
-                  Prioridad
-                </div>
-                <div className="mt-2 text-sm text-white/80">
-                  Sistemas con identidad
-                </div>
-              </div>
+                return (
+                  <div
+                    key={item.title}
+                    className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-black/25 p-5 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-200/25 hover:bg-white/[0.07]"
+                  >
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.15),transparent_38%)]" />
+
+                    <div className="relative z-10">
+                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-white/75">
+                        <Icon className="h-4 w-4" />
+                      </div>
+
+                      <h3 className="text-sm font-semibold text-white/92">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-6 text-white/55">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div ref={systemRef} className="mt-5 grid max-w-[1000px] gap-3 md:grid-cols-3">
+              {[
+                [Layers3, "Arquitectura clara", "Bases sólidas para proyectos que pueden crecer."],
+                [Orbit, "Movimiento premium", "Animaciones suaves, útiles y con intención visual."],
+                [MousePointer2, "Interacción memorable", "Detalles que hacen que la experiencia se sienta viva."],
+              ].map(([Icon, title, text]) => {
+                const LucideIcon = Icon as typeof Layers3
+
+                return (
+                  <div
+                    key={title as string}
+                    className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/[0.065]"
+                  >
+                    <LucideIcon className="mb-4 h-4 w-4 text-white/65" />
+                    <h3 className="text-sm font-semibold text-white/90">
+                      {title as string}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-white/52">
+                      {text as string}
+                    </p>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
-          {/* RIGHT CARD */}
           <div
             ref={cardRef}
-            className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.05] p-5 shadow-[0_30px_120px_rgba(0,0,0,0.45)] backdrop-blur-2xl md:p-6"
+            className="relative overflow-hidden rounded-[42px] border border-white/12 bg-white/[0.065] p-5 shadow-[0_45px_190px_rgba(0,0,0,0.72)] backdrop-blur-2xl md:p-6"
           >
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_30%,transparent_70%,rgba(255,255,255,0.05))]" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-indigo-500/8 to-transparent" />
+            <div
+              ref={scanRef}
+              className="pointer-events-none absolute left-0 right-0 top-0 h-28 bg-gradient-to-b from-cyan-300/0 via-cyan-200/[0.09] to-cyan-300/0"
+            />
 
-            <div className="relative z-10 flex flex-col gap-5">
-              {/* HEADER */}
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/38">
-                    Filosofía de trabajo
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.2),transparent_25%,transparent_62%,rgba(255,255,255,0.08))]" />
+            <div className="pointer-events-none absolute inset-[1px] rounded-[41px] border border-white/[0.06]" />
+            <div className="pointer-events-none absolute -right-28 -top-28 h-60 w-60 rounded-full bg-indigo-500/24 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-28 -left-28 h-60 w-60 rounded-full bg-fuchsia-500/22 blur-3xl" />
+
+            <div className="relative z-10">
+              <div className="mb-6 flex items-start justify-between gap-5">
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/38">
+                    Developer Core
                   </div>
 
-                  <p className="mt-3 max-w-[280px] text-sm leading-7 text-white/62">
-                    Construyo experiencias, aplicaciones y automatizaciones donde
-                    la forma y la función no se pelean: se potencian.
+                  <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">
+                    Diseño la experiencia. Construyo la lógica.
+                  </h3>
+
+                  <p className="mt-4 text-sm leading-7 text-white/58">
+                    Mi punto fuerte está en unir estética, interacción y código
+                    para crear productos digitales con utilidad real y una
+                    presencia visual potente.
                   </p>
                 </div>
 
-                <div className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] p-2 text-white/70">
+                <div className="shrink-0 rounded-full border border-white/10 bg-white/[0.06] p-2 text-white/70">
                   <ArrowUpRight className="h-4 w-4" />
                 </div>
               </div>
 
-              {/* SKILLS */}
-              <div className="rounded-[22px] border border-white/10 bg-black/25 p-4 backdrop-blur-xl">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
-                  Especialidades
+              <div
+                ref={terminalRef}
+                className="mb-5 rounded-[30px] border border-white/10 bg-black/35 p-4"
+              >
+                <div className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
+                  <Radio className="h-3.5 w-3.5" />
+                  Live profile
                 </div>
 
-                <ul
-                  ref={skillsRef}
-                  className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
-                >
-                  {skills.map((skill, index) => (
-                    <li
-                      key={skill}
-                      className="skill-item group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
+                {[
+                  ["emerald", "analizando idea del cliente..."],
+                  ["cyan", "diseñando sistema visual..."],
+                  ["fuchsia", "conectando lógica + experiencia..."],
+                  ["white", "preparando lanzamiento memorable..."],
+                ].map(([color, text]) => (
+                  <p key={text} className="font-mono text-xs leading-6 text-white/55">
+                    <span
+                      className={
+                        color === "emerald"
+                          ? "text-emerald-300"
+                          : color === "cyan"
+                          ? "text-cyan-300"
+                          : color === "fuchsia"
+                          ? "text-fuchsia-300"
+                          : "text-white"
+                      }
                     >
-                      <div className="absolute inset-y-0 left-0 w-px origin-top scale-y-0 bg-gradient-to-b from-indigo-400 via-white/70 to-fuchsia-400 transition-transform duration-500 group-hover:scale-y-100" />
+                      ●
+                    </span>{" "}
+                    {text}
+                  </p>
+                ))}
+              </div>
 
-                      <div className="flex min-w-0 items-center gap-3">
-                        <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.28em] text-white/35">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-3xl border border-white/10 bg-black/25 p-4">
+                  <Cpu className="mb-3 h-4 w-4 text-white/60" />
+                  <div className="text-sm font-semibold text-white/90">
+                    Automatización
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-white/48">
+                    Flujos, bots, APIs y procesos conectados.
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-black/25 p-4">
+                  <Globe2 className="mb-3 h-4 w-4 text-white/60" />
+                  <div className="text-sm font-semibold text-white/90">
+                    Web Apps
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-white/48">
+                    Interfaces modernas listas para producción.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 rounded-[30px] border border-white/10 bg-black/25 p-4">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
+                    Especialidades
+                  </div>
+                  <Zap className="h-4 w-4 text-white/45" />
+                </div>
+
+                <div ref={skillsRef} className="grid gap-2 sm:grid-cols-2">
+                  {skills.map((skill, index) => (
+                    <div
+                      key={skill}
+                      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 transition duration-300 hover:border-white/20 hover:bg-white/[0.075]"
+                    >
+                      <div className="absolute inset-y-0 left-0 w-px origin-top scale-y-0 bg-gradient-to-b from-cyan-300 via-white to-fuchsia-300 transition-transform duration-500 group-hover:scale-y-100" />
+
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-[10px] tracking-[0.25em] text-white/32">
                           {String(index + 1).padStart(2, "0")}
                         </span>
 
-                        <span className="block min-w-0 break-words text-sm font-medium leading-6 text-white/82">
+                        <span className="text-sm font-medium text-white/78">
                           {skill}
                         </span>
                       </div>
-                    </li>
+                    </div>
                   ))}
-                </ul>
-              </div>
-
-              {/* EXTRA BLOCK */}
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[20px] border border-white/10 bg-white/[0.03] p-4">
-                  <div className="mb-3 flex items-center gap-3">
-                    <div className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] p-2 text-white/70">
-                      <Bot className="h-4 w-4" />
-                    </div>
-                    <div className="text-sm font-semibold text-white/86">
-                      Bots & automatización
-                    </div>
-                  </div>
-
-                  <p className="text-sm leading-6 text-white/58">
-                    Bots personalizados para Discord, WhatsApp, Telegram y
-                    flujos automatizados conectados a APIs, paneles y sistemas.
-                  </p>
-                </div>
-
-                <div className="rounded-[20px] border border-white/10 bg-white/[0.03] p-4">
-                  <div className="mb-3 flex items-center gap-3">
-                    <div className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] p-2 text-white/70">
-                      <AppWindow className="h-4 w-4" />
-                    </div>
-                    <div className="text-sm font-semibold text-white/86">
-                      Apps digitales
-                    </div>
-                  </div>
-
-                  <p className="text-sm leading-6 text-white/58">
-                    Desarrollo de aplicaciones web y herramientas a medida con
-                    foco en rendimiento, utilidad real y una identidad visual fuerte.
-                  </p>
                 </div>
               </div>
 
-              {/* PILLARS */}
-              <div ref={pillarsRef} className="grid gap-3">
+              <div ref={pillarsRef} className="mt-5 grid gap-3">
                 {pillars.map((pillar) => {
                   const Icon = pillar.icon
 
                   return (
                     <div
                       key={pillar.title}
-                      className="rounded-[20px] border border-white/10 bg-white/[0.03] p-4 transition-colors duration-300 hover:bg-white/[0.05]"
+                      className="group rounded-[24px] border border-white/10 bg-white/[0.035] p-4 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.065]"
                     >
                       <div className="mb-3 flex items-center gap-3">
-                        <div className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] p-2 text-white/70">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-white/70">
                           <Icon className="h-4 w-4" />
                         </div>
 
-                        <div className="min-w-0 text-sm font-semibold text-white/86">
+                        <h4 className="text-sm font-semibold text-white/90">
                           {pillar.title}
-                        </div>
+                        </h4>
                       </div>
 
-                      <p className="text-sm leading-6 text-white/58">
+                      <p className="text-sm leading-6 text-white/55">
                         {pillar.text}
                       </p>
                     </div>
                   )
                 })}
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-4">
+                  <ShieldCheck className="mb-3 h-4 w-4 text-white/60" />
+                  <p className="text-sm font-semibold text-white/88">
+                    Responsive real
+                  </p>
+                </div>
+
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-4">
+                  <Command className="mb-3 h-4 w-4 text-white/60" />
+                  <p className="text-sm font-semibold text-white/88">
+                    Lógica escalable
+                  </p>
+                </div>
+
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-4">
+                  <Network className="mb-3 h-4 w-4 text-white/60" />
+                  <p className="text-sm font-semibold text-white/88">
+                    APIs conectadas
+                  </p>
+                </div>
+
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-4">
+                  <Fingerprint className="mb-3 h-4 w-4 text-white/60" />
+                  <p className="text-sm font-semibold text-white/88">
+                    Identidad propia
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 rounded-[28px] border border-white/10 bg-black/30 p-4">
+                <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
+                  <Braces className="h-3.5 w-3.5" />
+                  Core principle
+                </div>
+
+                <p className="text-sm leading-6 text-white/58">
+                  No se trata solo de que se vea bonito. Se trata de que el
+                  producto tenga presencia, lógica, velocidad y una experiencia
+                  que el cliente recuerde.
+                </p>
               </div>
             </div>
           </div>
@@ -587,4 +677,5 @@ const About = memo(() => {
 })
 
 About.displayName = "About"
+
 export default About

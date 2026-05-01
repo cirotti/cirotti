@@ -1,7 +1,21 @@
-import { useEffect, useRef, memo, useState } from "react"
+import { useEffect, useMemo, useRef, memo, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Github, ArrowUpRight } from "lucide-react"
+import {
+  Github,
+  ArrowUpRight,
+  Sparkles,
+  Eye,
+  Layers3,
+  MonitorPlay,
+  MousePointer2,
+  Radio,
+  Star,
+  Zap,
+  Play,
+  ExternalLink,
+  Code2,
+} from "lucide-react"
 import GlitchText from "../GlitchText"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -26,343 +40,308 @@ const projects: Project[] = [
     projectUrl: "https://github.com/",
     image: `${import.meta.env.BASE_URL}scatelier.png`,
   },
-{
-  title: "TSPC",
-  categoria: "Warzone Tournaments",
-  anio: "2026",
-  descripcion: "Plataforma competitiva enfocada en torneos de Warzone, con información de eventos, enfrentamientos, rankings y experiencia pensada para la comunidad gamer.",
-  githubUrl: "https://tspc-esports.vercel.app/",
-  projectUrl: "https://tspc-esports.vercel.app/",
-  image: `${import.meta.env.BASE_URL}tspc.png`,
-},
-{
-  title: "DecoSistemas",
-  categoria: "TV & Streaming",
-  anio: "2025",
-  descripcion: "Plataforma enfocada en decodificadores para TV que permite acceder a televisión por cable permanente y aplicaciones de streaming en un solo ecosistema.",
-  githubUrl: "https://deco-sistemas.vercel.app/",
-  projectUrl: "https://deco-sistemas.vercel.app/",
-  image: `${import.meta.env.BASE_URL}decosistemas.png`,
-},
+  {
+    title: "TSPC",
+    categoria: "Warzone Tournaments",
+    anio: "2026",
+    descripcion:
+      "Plataforma competitiva enfocada en torneos de Warzone, eventos, rankings y experiencia gamer.",
+    githubUrl: "https://tspc-esports.vercel.app/",
+    projectUrl: "https://tspc-esports.vercel.app/",
+    image: `${import.meta.env.BASE_URL}tspc.png`,
+  },
+  {
+    title: "DecoSistemas",
+    categoria: "TV & Streaming",
+    anio: "2025",
+    descripcion:
+      "Plataforma para decodificadores, TV permanente y apps de streaming dentro de un ecosistema visual.",
+    githubUrl: "https://deco-sistemas.vercel.app/",
+    projectUrl: "https://deco-sistemas.vercel.app/",
+    image: `${import.meta.env.BASE_URL}decosistemas.png`,
+  },
 ]
 
 const Work = memo(() => {
   const sectionRef = useRef<HTMLElement>(null)
-  const projectsRef = useRef<HTMLDivElement>(null)
-  const cursorViewRef = useRef<HTMLAnchorElement>(null)
-  const cursorLabelRef = useRef<HTMLSpanElement>(null)
-  const numberRef = useRef<HTMLSpanElement>(null)
-  const bigTextRef = useRef<HTMLDivElement>(null)
-  const glowLeftRef = useRef<HTMLDivElement>(null)
-  const glowRightRef = useRef<HTMLDivElement>(null)
+  const cursorRef = useRef<HTMLAnchorElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  const lightRef = useRef<HTMLDivElement>(null)
+  const bigTextRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const introRef = useRef<HTMLParagraphElement>(null)
+  const projectsRef = useRef<HTMLDivElement>(null)
+  const previewRef = useRef<HTMLDivElement>(null)
+  const previewImgRef = useRef<HTMLImageElement>(null)
+  const orbitRef = useRef<HTMLDivElement>(null)
+  const railRef = useRef<HTMLDivElement>(null)
+  const metaRef = useRef<HTMLDivElement>(null)
+  const mobileHintRef = useRef<HTMLDivElement>(null)
 
-  const [active, setActive] = useState<number | null>(null)
+  const [active, setActive] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 95 }, (_, i) => ({
+        id: i,
+        left: `${(i * 19.37 + 7) % 100}%`,
+        top: `${(i * 11.91 + 13) % 100}%`,
+        size: 1 + (i % 4),
+        delay: (i % 12) * 0.16,
+        duration: 2.1 + (i % 8) * 0.35,
+      })),
+    []
+  )
+
+  const activeProject = projects[active]
+
+  const animatePreview = () => {
+    if (!previewImgRef.current) return
+
+    gsap.fromTo(
+      previewImgRef.current,
+      { scale: 1.12, opacity: 0.45, filter: "blur(14px)" },
+      {
+        scale: 1,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.85,
+        ease: "power4.out",
+      }
+    )
+
+    if (previewRef.current) {
+      gsap.fromTo(
+        previewRef.current,
+        { scale: 0.975 },
+        { scale: 1, duration: 0.42, ease: "power3.out" }
+      )
+    }
+  }
+
+  const activateProject = (index: number) => {
+    setActive(index)
+
+    if (cursorRef.current) {
+      cursorRef.current.href = projects[index].projectUrl || projects[index].githubUrl
+    }
+
+    animatePreview()
+
+    if (!isMobile) {
+      gsap.to(cursorRef.current, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.28,
+        ease: "power3.out",
+        overwrite: "auto",
+      })
+    }
+  }
+
+  const hideCursor = () => {
+    if (isMobile) return
+
+    gsap.to(cursorRef.current, {
+      scale: 0.65,
+      opacity: 0,
+      duration: 0.22,
+      ease: "power3.out",
+      overwrite: "auto",
+    })
+  }
+
+  const openProject = (project: Project) => {
+    window.open(project.projectUrl || project.githubUrl, "_blank", "noopener,noreferrer")
+  }
+
+  useEffect(() => {
+    if (!isMobile) return
+
+    let index = active
+
+    const interval = setInterval(() => {
+      index = (index + 1) % projects.length
+      setActive(index)
+      animatePreview()
+
+      const container = projectsRef.current
+      const card = container?.children[index] as HTMLElement | undefined
+
+      if (container && card) {
+        container.scrollTo({
+          left: card.offsetLeft - 20,
+          behavior: "smooth",
+        })
+      }
+    }, 3800)
+
+    return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
+
+  useEffect(() => {
+    const section = sectionRef.current
+    const light = lightRef.current
+
+    const moveLight = (e: MouseEvent) => {
+      if (!section || !light) return
+
+      const rect = section.getBoundingClientRect()
+
+      gsap.to(light, {
+        x: e.clientX - rect.left - 270,
+        y: e.clientY - rect.top - 270,
+        duration: 0.7,
+        ease: "power3.out",
+      })
+    }
+
+    section?.addEventListener("mousemove", moveLight)
+
     const ctx = gsap.context(() => {
-      gsap.set(cursorViewRef.current, {
+      gsap.set(cursorRef.current, {
         xPercent: -50,
         yPercent: -50,
-        scale: 0.7,
+        scale: 0.65,
         opacity: 0,
         pointerEvents: "none",
       })
 
-      gsap.to(numberRef.current, {
-        y: -220,
+      const parallax = {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      }
+
+      gsap.to(gridRef.current, {
+        yPercent: 16,
         ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+        scrollTrigger: parallax,
       })
 
       gsap.to(bigTextRef.current, {
         xPercent: -28,
         ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+        scrollTrigger: parallax,
       })
 
-      gsap.to(gridRef.current, {
-        yPercent: 16,
+      gsap.to(orbitRef.current, {
+        rotate: 360,
+        duration: 46,
         ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+        repeat: -1,
       })
 
-      gsap.to(glowLeftRef.current, {
-        xPercent: 10,
-        yPercent: -10,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
+      gsap.fromTo(
+        [titleRef.current, introRef.current, previewRef.current, metaRef.current],
+        { y: 45, opacity: 0, filter: "blur(16px)" },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          stagger: 0.12,
+          duration: 1,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 72%",
+          },
+        }
+      )
+
+      gsap.fromTo(
+        railRef.current,
+        { scaleY: 0, transformOrigin: "top center" },
+        {
+          scaleY: 1,
+          duration: 1.1,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 78%",
+          },
+        }
+      )
+
+      gsap.fromTo(
+        ".work-item",
+        {
+          y: window.innerWidth < 768 ? 40 : 70,
+          opacity: 0,
+          filter: "blur(12px)",
+          scale: window.innerWidth < 768 ? 0.96 : 1,
         },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          scale: 1,
+          duration: 0.95,
+          stagger: 0.12,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: projectsRef.current,
+            start: "top 84%",
+          },
+        }
+      )
+
+      gsap.fromTo(
+        mobileHintRef.current,
+        { y: 14, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: projectsRef.current,
+            start: "top 88%",
+          },
+        }
+      )
+
+      gsap.to(".work-float", {
+        y: -14,
+        duration: 2.8,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.16,
       })
 
-      gsap.to(glowRightRef.current, {
-        xPercent: -8,
-        yPercent: 12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
+      gsap.to(".work-orb", {
+        scale: 1.35,
+        opacity: 1,
+        duration: 1.9,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.25,
       })
-
-      const items = gsap.utils.toArray<HTMLElement>(".project-item")
-
-items.forEach((item, index) => {
-  const title = item.querySelector(".project-title")
-  const line = item.querySelector(".project-line")
-  const glow = item.querySelector(".project-glow")
-  const arrow = item.querySelector(".project-arrow")
-  const meta = item.querySelector(".project-meta")
-  const media = item.querySelector(".project-media")
-  const mediaImg = item.querySelector(".project-media-img")
-  const description = item.querySelector(".project-description")
-  const chip = item.querySelector(".project-chip")
-
-  gsap.from(item, {
-    y: 90,
-    opacity: 0,
-    duration: 1,
-    ease: "power4.out",
-    scrollTrigger: {
-      trigger: item,
-      start: "top 88%",
-    },
-  })
-
-  gsap.set(line, {
-    scaleX: 0,
-    transformOrigin: "left center",
-  })
-
-  gsap.set(glow, { opacity: 0 })
-  gsap.set(arrow, { x: -18, opacity: 0, rotate: -8 })
-  gsap.set(meta, { x: 0 })
-  gsap.set(media, { scale: 0.94, rotate: -4, y: 10 })
-  gsap.set(mediaImg, { scale: 1 })
-  gsap.set(title, { x: 0 })
-
-  const killProjectTweens = () => {
-    gsap.killTweensOf([
-      title,
-      line,
-      glow,
-      arrow,
-      meta,
-      media,
-      mediaImg,
-      description,
-      chip,
-    ])
-  }
-
-  const enter = () => {
-    setActive(index)
-
-    if (cursorViewRef.current) {
-      cursorViewRef.current.href =
-        projects[index].projectUrl || projects[index].githubUrl
-    }
-
-    killProjectTweens()
-
-    gsap.to(title, {
-      x: 24,
-      duration: 0.45,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(line, {
-      scaleX: 1,
-      duration: 0.55,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(glow, {
-      opacity: 1,
-      duration: 0.45,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(arrow, {
-      x: 0,
-      opacity: 1,
-      rotate: 0,
-      duration: 0.4,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(meta, {
-      x: -8,
-      duration: 0.45,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(media, {
-      scale: 1,
-      rotate: 0,
-      y: 0,
-      duration: 0.55,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(mediaImg, {
-      scale: 1.08,
-      duration: 0.9,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(description, {
-      color: "rgba(255,255,255,0.82)",
-      duration: 0.35,
-      ease: "power2.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(chip, {
-      backgroundColor: "rgba(255,255,255,0.08)",
-      borderColor: "rgba(255,255,255,0.18)",
-      color: "rgba(255,255,255,0.86)",
-      duration: 0.35,
-      ease: "power2.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(cursorViewRef.current, {
-      scale: 1,
-      opacity: 1,
-      duration: 0.28,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-  }
-
-  const leave = () => {
-    setActive((prev) => (prev === index ? null : prev))
-
-    killProjectTweens()
-
-    gsap.to(title, {
-      x: 0,
-      duration: 0.32,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(line, {
-      scaleX: 0,
-      duration: 0.35,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(glow, {
-      opacity: 0,
-      duration: 0.28,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(arrow, {
-      x: -18,
-      opacity: 0,
-      rotate: -8,
-      duration: 0.28,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(meta, {
-      x: 0,
-      duration: 0.32,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(media, {
-      scale: 0.94,
-      rotate: -4,
-      y: 10,
-      duration: 0.34,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(mediaImg, {
-      scale: 1,
-      duration: 0.4,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(description, {
-      color: "rgba(255,255,255,0.56)",
-      duration: 0.28,
-      ease: "power2.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(chip, {
-      backgroundColor: "rgba(255,255,255,0.03)",
-      borderColor: "rgba(255,255,255,0.1)",
-      color: "rgba(255,255,255,0.45)",
-      duration: 0.28,
-      ease: "power2.out",
-      overwrite: "auto",
-    })
-
-    gsap.to(cursorViewRef.current, {
-      scale: 0.7,
-      opacity: 0,
-      duration: 0.2,
-      ease: "power3.out",
-      overwrite: "auto",
-    })
-  }
-
-  item.addEventListener("mouseenter", enter)
-  item.addEventListener("mouseleave", leave)
-})
     }, sectionRef)
 
-    return () => ctx.revert()
+    return () => {
+      ctx.revert()
+      section?.removeEventListener("mousemove", moveLight)
+    }
   }, [])
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      if (!cursorViewRef.current) return
+      if (!cursorRef.current || window.innerWidth < 1024) return
 
-      const isDesktop = window.innerWidth >= 1024
-      if (!isDesktop) return
-
-      gsap.to(cursorViewRef.current, {
+      gsap.to(cursorRef.current, {
         x: e.clientX,
         y: e.clientY,
         duration: 0.22,
@@ -374,186 +353,421 @@ items.forEach((item, index) => {
     return () => window.removeEventListener("mousemove", move)
   }, [])
 
-  const handleProjectClick = (project: Project) => {
-    const url = project.projectUrl || project.githubUrl
-    window.open(url, "_blank", "noopener,noreferrer")
-  }
+  useEffect(() => {
+    if (!projectsRef.current) return
+
+    const container = projectsRef.current
+
+    const onScroll = () => {
+      if (window.innerWidth >= 1024) return
+
+      const cards = Array.from(container.children) as HTMLElement[]
+      const center = container.scrollLeft + container.clientWidth / 2
+
+      let closestIndex = 0
+      let closestDistance = Infinity
+
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2
+        const distance = Math.abs(center - cardCenter)
+
+        const strength = Math.max(0, 1 - distance / container.clientWidth)
+        const img = card.querySelector(".work-card-img")
+
+        gsap.to(card, {
+          scale: 0.94 + strength * 0.06,
+          opacity: 0.62 + strength * 0.38,
+          duration: 0.25,
+          ease: "power2.out",
+          overwrite: "auto",
+        })
+
+        if (img) {
+          gsap.to(img, {
+            y: (1 - strength) * 24,
+            scale: 1.08 + strength * 0.04,
+            duration: 0.25,
+            ease: "power2.out",
+            overwrite: "auto",
+          })
+        }
+
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+
+      if (closestIndex !== active) {
+        setActive(closestIndex)
+      }
+    }
+
+    container.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+
+    return () => container.removeEventListener("scroll", onScroll)
+  }, [active])
 
   return (
     <section
       ref={sectionRef}
       id="work"
-      className="relative overflow-hidden px-6 py-28 md:px-10 md:py-36 lg:px-16 xl:px-24"
+      className="relative isolate overflow-hidden px-5 py-24 text-white sm:px-6 md:px-10 md:py-32 lg:px-16 xl:px-24"
     >
       <a
-        ref={cursorViewRef}
-        href={active !== null ? projects[active].projectUrl || projects[active].githubUrl : "#"}
+        ref={cursorRef}
+        href={activeProject.projectUrl || activeProject.githubUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="pointer-events-none fixed left-0 top-0 z-[70] hidden lg:flex"
+        className="pointer-events-none fixed left-0 top-0 z-[80] hidden lg:flex"
         aria-label="Ver proyecto"
       >
-<div className="relative flex h-[130px] w-[130px] items-center justify-center rounded-full border border-cyan-300/40 bg-black/40 backdrop-blur-xl shadow-[0_0_40px_rgba(103,232,249,0.45)]">
-
-  <div className="absolute inset-0 rounded-full bg-cyan-400/10 blur-xl" />
-
-  <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.34em] text-cyan-200">
-    View
-  </span>
-
-</div>
+        <div className="relative flex h-[132px] w-[132px] items-center justify-center rounded-full border border-cyan-200/35 bg-black/45 backdrop-blur-xl shadow-[0_0_60px_rgba(103,232,249,0.45)]">
+          <div className="absolute inset-0 rounded-full bg-cyan-400/10 blur-xl" />
+          <div className="absolute inset-3 rounded-full border border-white/10" />
+          <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.34em] text-cyan-100">
+            View
+          </span>
+        </div>
       </a>
+
+      <div className="absolute inset-0 -z-20 bg-[#030511]" />
+
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_58%_0%,rgba(99,102,241,0.22),transparent_34%),radial-gradient(circle_at_85%_50%,rgba(217,70,239,0.18),transparent_32%),radial-gradient(circle_at_20%_78%,rgba(34,211,238,0.12),transparent_30%),linear-gradient(180deg,rgba(3,5,17,0.02)_0%,rgba(3,5,17,0.42)_45%,rgba(0,0,0,0.88)_100%)]" />
 
       <div
         ref={gridRef}
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.13]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage:
-            "radial-gradient(circle at center, black 45%, transparent 85%)",
-          WebkitMaskImage:
-            "radial-gradient(circle at center, black 45%, transparent 85%)",
+          backgroundSize: "76px 76px",
+          maskImage: "radial-gradient(circle at center, black 34%, transparent 82%)",
+          WebkitMaskImage: "radial-gradient(circle at center, black 34%, transparent 82%)",
         }}
       />
 
       <div
-        ref={glowLeftRef}
-        className="absolute left-[-12%] top-[12%] h-[32rem] w-[32rem] rounded-full bg-indigo-500/12 blur-[170px]"
+        ref={lightRef}
+        className="pointer-events-none absolute left-0 top-0 z-[2] h-[540px] w-[540px] rounded-full bg-white/[0.06] blur-[150px]"
       />
-      <div
-        ref={glowRightRef}
-        className="absolute bottom-[-10%] right-[-8%] h-[30rem] w-[30rem] rounded-full bg-fuchsia-500/12 blur-[170px]"
-      />
+
+      <div className="pointer-events-none absolute inset-0 z-[2]">
+        {particles.map((p) => (
+          <span
+            key={p.id}
+            className="absolute rounded-full bg-white/70"
+            style={{
+              left: p.left,
+              top: p.top,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              animation: `pulse ${p.duration}s ease-in-out ${p.delay}s infinite`,
+              boxShadow: "0 0 26px rgba(255,255,255,0.55)",
+            }}
+          />
+        ))}
+      </div>
 
       <div
         ref={bigTextRef}
-        className="pointer-events-none absolute left-[-10%] top-[14%] whitespace-nowrap select-none text-[18vw] font-black leading-none text-white/[0.025]"
+        className="pointer-events-none absolute left-[-48%] top-[8%] z-[1] whitespace-nowrap text-[22vw] font-black uppercase leading-none tracking-[-0.095em] text-white/[0.03] sm:left-[-24%] sm:text-[17vw] lg:left-[-12%] lg:text-[13vw]"
       >
-        WORK — SHOWCASE — PROJECTS — WORK
+        SELECTED WORK — DIGITAL WORLDS — SHOWCASE —
       </div>
 
-      <span
-        ref={numberRef}
-        className="pointer-events-none absolute right-[-1rem] top-[18%] select-none text-[9rem] font-black leading-none text-white/[0.04] sm:text-[12rem] lg:right-[2rem] lg:text-[18rem]"
-      >
-        02
-      </span>
+      <div className="pointer-events-none absolute right-[3%] top-[8%] z-[2] hidden h-[40rem] w-[40rem] rounded-full border border-white/[0.07] lg:block">
+        <div
+          ref={orbitRef}
+          className="absolute inset-10 rounded-full border border-dashed border-cyan-200/[0.1]"
+        >
+          <span className="work-orb absolute left-1/2 top-[-5px] h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-cyan-200 opacity-70 shadow-[0_0_34px_rgba(165,243,252,0.95)]" />
+          <span className="work-orb absolute bottom-12 right-12 h-2 w-2 rounded-full bg-fuchsia-200 opacity-70 shadow-[0_0_28px_rgba(245,208,254,0.9)]" />
+        </div>
+      </div>
 
-      <div className="relative z-10 mx-auto max-w-[1320px]">
-        <div className="mb-16 grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end lg:gap-16">
-          <div>
-            <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.38em] text-white/40">
-              Proyectos seleccionados
+      <div className="relative z-10 mx-auto max-w-[1500px]">
+        <div className="mb-14 grid gap-10 lg:grid-cols-[86px_minmax(0,1fr)_minmax(340px,520px)] lg:items-end xl:gap-16">
+          <aside className="hidden lg:flex lg:flex-col lg:items-center lg:justify-between">
+            <div className="font-mono text-[10px] uppercase tracking-[0.46em] text-white/35 [writing-mode:vertical-rl] rotate-180">
+              WORK / SHOWCASE / SELECTED PROJECTS
             </div>
 
-            <h2 className="max-w-[920px] text-[clamp(2.6rem,6vw,6rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
-              Diseño experiencias y productos que buscan sentirse
-              <span className="ml-[0.18em] inline-block text-stroke">
-                únicos
+            <div
+              ref={railRef}
+              className="mt-8 h-36 w-px bg-gradient-to-b from-transparent via-white/45 to-transparent"
+            />
+          </aside>
+
+          <div>
+            <div
+              ref={metaRef}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 backdrop-blur-xl"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-cyan-300" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/55">
+                Proyectos seleccionados
               </span>
-              , vivos y memorables.
-            </h2>
+            </div>
+
+            <div
+              ref={titleRef}
+              className="max-w-[1050px] text-[clamp(3rem,6.2vw,7rem)] font-black uppercase leading-[0.82] tracking-[-0.08em]"
+            >
+              <div className="overflow-hidden pb-1">
+                <div className="bg-gradient-to-r from-white via-white to-white/45 bg-clip-text text-transparent">
+                  Trabajos que
+                </div>
+              </div>
+              <div className="overflow-hidden pb-1">
+                <div className="bg-gradient-to-r from-cyan-200 via-white to-fuchsia-200 bg-clip-text text-transparent">
+                  hablan antes
+                </div>
+              </div>
+              <div className="overflow-hidden pb-1">
+                <div>que yo.</div>
+              </div>
+            </div>
           </div>
 
-          <p className="max-w-[360px] text-sm leading-7 text-white/58 md:text-base">
-            Una selección de proyectos donde combino identidad visual,
-            interacción y detalle para construir interfaces con presencia,
-            profundidad y carácter.
+          <p
+            ref={introRef}
+            className="max-w-[440px] text-sm leading-7 text-white/60 md:text-base"
+          >
+            Cada proyecto es una prueba de dirección visual, lógica, interacción
+            y detalle. No solo muestro pantallas: muestro experiencias que una
+            marca podría usar para verse distinta.
           </p>
         </div>
 
-        <div ref={projectsRef} className="relative space-y-5">
-          {projects.map((project, index) => (
-            <article
-              key={project.title}
-              className="project-item group relative cursor-pointer overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.025] p-4 backdrop-blur-sm transition-colors duration-300 hover:border-white/14 md:p-5 lg:p-6"
-              onClick={() => handleProjectClick(project)}
-            >
-              <div
-                className="project-line absolute inset-0 origin-left rounded-[30px] bg-white/[0.03]"
-                style={{ transform: "scaleX(0)" }}
-              />
+        <div
+          ref={mobileHintRef}
+          className="mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-xs text-white/55 backdrop-blur-xl lg:hidden"
+        >
+          <span className="inline-flex items-center gap-2">
+            <Play className="h-3.5 w-3.5 text-cyan-200" />
+            Desliza para explorar
+          </span>
+          <span className="font-mono tracking-[0.25em]">
+            {String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+          </span>
+        </div>
 
-              <div className="project-glow absolute inset-0 rounded-[30px] bg-[radial-gradient(circle_at_18%_50%,rgba(99,102,241,0.15),transparent_30%),radial-gradient(circle_at_82%_50%,rgba(217,70,239,0.13),transparent_34%)] opacity-0" />
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(360px,0.8fr)] xl:gap-12">
+          <div
+            ref={projectsRef}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-7 [scrollbar-width:none] [-ms-overflow-style:none] lg:block lg:space-y-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
+          >
+            {projects.map((project, index) => {
+              const isActive = active === index
 
-              <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-                <div className="flex items-start justify-between gap-4 lg:col-span-7">
-                  <div className="flex min-w-0 items-start gap-4 md:gap-5">
-                    <div className="pt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
+              return (
+                <article
+                  key={project.title}
+                  className={`work-item group relative min-w-[86%] snap-center cursor-pointer overflow-hidden rounded-[34px] border p-5 backdrop-blur-xl transition duration-500 active:scale-[0.97] sm:min-w-[72%] md:p-6 lg:min-w-0 ${
+                    isActive
+                      ? "border-cyan-200/25 bg-white/[0.08] shadow-[0_24px_100px_rgba(34,211,238,0.12)]"
+                      : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]"
+                  }`}
+                  onMouseEnter={() => !isMobile && activateProject(index)}
+                  onMouseLeave={() => !isMobile && hideCursor()}
+                  onClick={() => {
+                    if (isMobile) {
+                      activateProject(index)
+                    } else {
+                      openProject(project)
+                    }
+                  }}
+                >
+                  <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_10%_50%,rgba(34,211,238,0.16),transparent_34%),radial-gradient(circle_at_90%_50%,rgba(217,70,239,0.14),transparent_34%)]" />
 
-                    <div className="min-w-0">
-                      <div className="mb-4 flex items-center gap-4 md:gap-5">
-                        <div className="project-arrow translate-x-[-18px] rotate-[-8deg] opacity-0 text-white/70">
-                          <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6" />
-                        </div>
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-                        <GlitchText
-                          text={project.title}
-                          as="h3"
-                          className="project-title text-3xl font-semibold leading-none tracking-[-0.05em] text-white sm:text-4xl lg:text-[3.35rem]"
-                        />
-                      </div>
+                  <div className="relative z-10 grid gap-5 md:grid-cols-[1fr_150px] md:items-center">
+                    <div>
+                      <div className="mb-5 flex flex-wrap items-center gap-3">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
 
-                      <p className="project-description max-w-[42ch] text-sm leading-7 text-white/56 md:text-[15px]">
-                        {project.descripcion}
-                      </p>
-
-                      <div className="project-meta mt-6 flex flex-wrap items-center gap-3">
-                        <span className="project-chip rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/45">
+                        <span className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">
                           {project.categoria}
                         </span>
 
-                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/34">
                           {project.anio}
                         </span>
                       </div>
+
+                      <div className="mb-4 flex items-center gap-4">
+                        <GlitchText
+                          text={project.title}
+                          as="h3"
+                          className="text-3xl font-semibold leading-none tracking-[-0.055em] text-white sm:text-4xl lg:text-[3.3rem]"
+                        />
+
+                        <ArrowUpRight className="h-5 w-5 text-white/45 transition duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-white" />
+                      </div>
+
+                      <p className="max-w-[48ch] text-sm leading-7 text-white/58 md:text-[15px]">
+                        {project.descripcion}
+                      </p>
+
+                      <div className="mt-5 flex flex-wrap gap-3">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-2 text-xs text-white/60">
+                          <Eye className="h-3.5 w-3.5" />
+                          Live preview
+                        </span>
+
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-2 text-xs text-white/60 transition hover:border-white/20 hover:text-white"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Github className="h-3.5 w-3.5" />
+                          Source
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className="lg:col-span-4">
-                  <div className="project-media relative h-[220px] translate-y-[10px] overflow-hidden rounded-[22px] border border-white/10 bg-black/40 shadow-[0_16px_50px_rgba(0,0,0,0.35)] scale-[0.94] rotate-[-4deg] lg:h-[240px]">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="project-media-img h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-black/45 via-transparent to-white/10" />
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="relative h-[170px] overflow-hidden rounded-[26px] border border-white/10 bg-black/35 md:h-[150px]">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="work-card-img h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-white/10" />
 
-                    <div className="absolute left-4 top-4">
-                      <span className="rounded-full border border-white/12 bg-black/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/74 backdrop-blur-md">
-                        Showcase
-                      </span>
-                    </div>
-
-                    <div className="absolute inset-0 hidden items-center justify-center lg:flex">
-                      <div className="rounded-full border border-white/10 bg-black/35 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/70 opacity-0 transition-all duration-300 group-hover:opacity-100">
-                        Hover to view
+                      <div className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/35 text-white/70 backdrop-blur-xl lg:hidden">
+                        <ExternalLink className="h-4 w-4" />
                       </div>
                     </div>
                   </div>
+                </article>
+              )
+            })}
+          </div>
+
+          <div
+            ref={previewRef}
+            className="relative h-fit overflow-hidden rounded-[42px] border border-white/12 bg-white/[0.065] p-5 shadow-[0_45px_190px_rgba(0,0,0,0.72)] backdrop-blur-2xl lg:sticky lg:top-24"
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.2),transparent_25%,transparent_62%,rgba(255,255,255,0.08))]" />
+            <div className="pointer-events-none absolute inset-[1px] rounded-[41px] border border-white/[0.06]" />
+
+            <div className="relative z-10">
+              <div className="mb-5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/30" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/18" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
                 </div>
 
-                <div className="flex items-end justify-start lg:col-span-1 lg:justify-end">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/github inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/60 transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
-                    onClick={(e) => e.stopPropagation()}
-                    aria-label={`Ver repositorio de ${project.title}`}
-                  >
-                    <Github className="h-4 w-4 transition-transform duration-300 group-hover/github:scale-110" />
-                  </a>
+                <span className="rounded-full border border-cyan-200/15 bg-cyan-300/[0.06] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-cyan-100/70">
+                  Active preview
+                </span>
+              </div>
+
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[30px] border border-white/10 bg-black/40">
+                <img
+                  ref={previewImgRef}
+                  src={activeProject.image}
+                  alt={activeProject.title}
+                  className="h-full w-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-white/10" />
+
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                  <div className="rounded-[24px] border border-white/10 bg-black/40 p-4 backdrop-blur-xl">
+                    <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
+                      <Radio className="h-3.5 w-3.5" />
+                      Selected case
+                    </div>
+
+                    <h3 className="text-2xl font-semibold tracking-[-0.04em] text-white">
+                      {activeProject.title}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-white/58">
+                      {activeProject.descripcion}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </article>
-          ))}
+
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                {[
+                  [Layers3, "Identidad"],
+                  [MonitorPlay, "Interfaz"],
+                  [MousePointer2, "Interacción"],
+                ].map(([Icon, label]) => {
+                  const LucideIcon = Icon as typeof Layers3
+
+                  return (
+                    <div
+                      key={label as string}
+                      className="work-float rounded-[22px] border border-white/10 bg-black/25 p-4"
+                    >
+                      <LucideIcon className="mb-3 h-4 w-4 text-white/60" />
+                      <p className="text-xs font-medium text-white/72">
+                        {label as string}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => openProject(activeProject)}
+                className="mt-5 flex w-full items-center justify-between rounded-[26px] border border-white/10 bg-white/[0.045] px-5 py-4 text-sm font-medium text-white/78 transition hover:border-white/20 hover:bg-white/[0.075] hover:text-white active:scale-[0.98]"
+              >
+                Abrir proyecto
+                <ArrowUpRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-3 md:grid-cols-3">
+          {[
+            [Star, "Selección curada", "Solo proyectos donde la experiencia visual tiene intención."],
+            [Zap, "Impacto rápido", "Diseños pensados para llamar la atención desde el primer vistazo."],
+            [Sparkles, "Detalle premium", "Microinteracciones, profundidad y estética consistente con tu marca."],
+          ].map(([Icon, title, text]) => {
+            const LucideIcon = Icon as typeof Star
+
+            return (
+              <div
+                key={title as string}
+                className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
+              >
+                <LucideIcon className="mb-4 h-4 w-4 text-white/65" />
+                <h3 className="text-sm font-semibold text-white/90">
+                  {title as string}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-white/52">
+                  {text as string}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="mt-4 rounded-[28px] border border-white/10 bg-black/25 p-5 backdrop-blur-xl lg:hidden">
+          <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
+            <Code2 className="h-3.5 w-3.5" />
+            Mobile experience
+          </div>
+
+          <p className="text-sm leading-6 text-white/56">
+            En mobile, la galería se comporta como una experiencia tipo app:
+            desliza, toca un proyecto y mira cómo cambia el preview activo.
+          </p>
         </div>
       </div>
     </section>
@@ -561,4 +775,5 @@ items.forEach((item, index) => {
 })
 
 Work.displayName = "Work"
+
 export default Work
