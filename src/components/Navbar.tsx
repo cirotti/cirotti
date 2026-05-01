@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
-import ThemeToggle from "./ThemeToggle"
 
 interface NavbarProps {
   isLoaded?: boolean
@@ -14,6 +13,8 @@ const navLinks = [
 
 const Navbar = ({ isLoaded = true }: NavbarProps) => {
   const navRef = useRef<HTMLElement>(null)
+  const shellRef = useRef<HTMLDivElement>(null)
+  const glowRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const mobilePanelRef = useRef<HTMLDivElement>(null)
   const mobileLinksRef = useRef<HTMLDivElement>(null)
@@ -39,10 +40,34 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
   }, [isLoaded])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => {
+      const active = window.scrollY > 24
+      setScrolled(active)
+
+      gsap.to(shellRef.current, {
+        backgroundColor: active
+          ? "rgba(3,5,17,0.92)"
+          : "rgba(255,255,255,0.035)",
+        borderColor: active
+          ? "rgba(103,232,249,0.35)"
+          : "rgba(255,255,255,0.08)",
+        boxShadow: active
+          ? "0 20px 120px rgba(0,0,0,0.7), 0 0 90px rgba(34,211,238,0.25)"
+          : "0 0 0 rgba(0,0,0,0)",
+        duration: 0.5,
+        ease: "power3.out",
+      })
+
+      gsap.to(glowRef.current, {
+        opacity: active ? 1 : 0,
+        scale: active ? 1.1 : 0.7,
+        duration: 0.5,
+        ease: "power3.out",
+      })
+    }
+
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
-
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
@@ -54,7 +79,6 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
 
     if (isOpen) {
       document.body.style.overflow = "hidden"
-
       gsap.set(menuRef.current, { pointerEvents: "auto" })
 
       gsap.fromTo(
@@ -120,14 +144,24 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
         style={{ opacity: isLoaded ? 1 : 0 }}
       >
         <div
-          className={`relative mx-auto flex max-w-[1500px] items-center justify-between overflow-hidden rounded-full border px-4 py-3 backdrop-blur-2xl transition-all duration-500 sm:px-5 ${
-            scrolled
-              ? "border-white/12 bg-[#030511]/72 shadow-[0_18px_80px_rgba(0,0,0,0.38)]"
-              : "border-white/8 bg-white/[0.035]"
+          ref={shellRef}
+          className={`relative mx-auto flex max-w-[1500px] items-center justify-between overflow-hidden rounded-full border px-4 backdrop-blur-2xl transition-all duration-500 sm:px-5 ${
+            scrolled ? "py-2" : "py-3"
           }`}
         >
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.11),transparent_28%,transparent_70%,rgba(255,255,255,0.04))]" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          <div
+            ref={glowRef}
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[180px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-cyan-300/40 via-indigo-400/30 to-fuchsia-400/40 opacity-0 blur-[80px]"
+          />
+
+          <div
+            className={`pointer-events-none absolute inset-x-10 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-200 to-transparent transition-all duration-500 ${
+              scrolled ? "opacity-100" : "opacity-0"
+            }`}
+          />
+
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.13),transparent_28%,transparent_70%,rgba(255,255,255,0.05))]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
           <a
             href="#"
@@ -138,7 +172,13 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
             className="group relative z-10 inline-flex items-center gap-3 text-white"
             aria-label="Ir al inicio"
           >
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.055] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+            <span
+              className={`relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.055] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 ${
+                scrolled
+                  ? "scale-90 shadow-[0_0_35px_rgba(103,232,249,0.35)]"
+                  : ""
+              }`}
+            >
               <span className="absolute h-2.5 w-2.5 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(165,243,252,0.9)]" />
               <span className="absolute inset-2 rounded-full border border-white/10" />
             </span>
@@ -158,8 +198,8 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
             </span>
           </a>
 
-          <div className="relative z-10 hidden items-center gap-2 md:flex">
-            <div className="mr-2 flex items-center gap-1 rounded-full border border-white/10 bg-black/20 p-1">
+          <div className="relative z-10 hidden items-center md:flex">
+            <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/20 p-1">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
@@ -174,13 +214,9 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
                 </button>
               ))}
             </div>
-
-            <ThemeToggle />
           </div>
 
-          <div className="relative z-50 flex items-center gap-3 md:hidden">
-            <ThemeToggle />
-
+          <div className="relative z-50 flex items-center md:hidden">
             <button
               onClick={() => setIsOpen((prev) => !prev)}
               className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.055] text-white backdrop-blur-xl"
@@ -221,18 +257,6 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
           style={{ clipPath: "circle(0% at 90% 7%)" }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_15%,rgba(99,102,241,0.28),transparent_36%),radial-gradient(circle_at_20%_80%,rgba(34,211,238,0.12),transparent_32%),radial-gradient(circle_at_90%_75%,rgba(217,70,239,0.18),transparent_32%)]" />
-
-          <div
-            className="absolute inset-0 opacity-[0.12]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
-              backgroundSize: "72px 72px",
-              maskImage: "radial-gradient(circle at center, black 35%, transparent 82%)",
-              WebkitMaskImage:
-                "radial-gradient(circle at center, black 35%, transparent 82%)",
-            }}
-          />
 
           <div className="absolute left-1/2 top-[18%] h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-300/10 blur-[90px]" />
 
