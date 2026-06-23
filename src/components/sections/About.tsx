@@ -97,7 +97,7 @@ const About = memo(() => {
 
   const particles = useMemo(
     () =>
-      Array.from({ length: 95 }, (_, i) => ({
+      Array.from({ length: 34 }, (_, i) => ({
         id: i,
         left: `${(i * 17.17 + 9) % 100}%`,
         top: `${(i * 23.91 + 11) % 100}%`,
@@ -112,19 +112,23 @@ const About = memo(() => {
     const section = sectionRef.current
     const light = lightRef.current
 
-    const move = (e: MouseEvent) => {
-      if (!section || !light) return
-      const rect = section.getBoundingClientRect()
+    if (!section || !light) return
 
-      gsap.to(light, {
-        x: e.clientX - rect.left - 280,
-        y: e.clientY - rect.top - 280,
-        duration: 0.75,
-        ease: "power3.out",
-      })
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const isMobile = window.matchMedia("(max-width: 767px)").matches
+
+    const xTo = gsap.quickTo(light, "x", { duration: 0.45, ease: "power3.out" })
+    const yTo = gsap.quickTo(light, "y", { duration: 0.45, ease: "power3.out" })
+
+    const move = (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect()
+      xTo(e.clientX - rect.left - 240)
+      yTo(e.clientY - rect.top - 240)
     }
 
-    section?.addEventListener("mousemove", move)
+    if (!isMobile && !prefersReducedMotion) {
+      section.addEventListener("mousemove", move, { passive: true })
+    }
 
     const ctx = gsap.context(() => {
       const parallax = {
@@ -140,28 +144,30 @@ const About = memo(() => {
       gsap.to(nebulaRef.current, { xPercent: -8, yPercent: 10, ease: "none", scrollTrigger: parallax })
       gsap.to(constellationRef.current, { yPercent: -12, ease: "none", scrollTrigger: parallax })
 
-      gsap.to(orbitRef.current, {
-        rotate: 360,
-        duration: 44,
-        ease: "none",
-        repeat: -1,
-      })
+      if (!isMobile && !prefersReducedMotion) {
+        gsap.to(orbitRef.current, {
+          rotate: 360,
+          duration: 70,
+          ease: "none",
+          repeat: -1,
+        })
 
-      gsap.to(pulseRef.current, {
-        scale: 1.18,
-        opacity: 0.15,
-        duration: 2.6,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      })
+        gsap.to(pulseRef.current, {
+          scale: 1.1,
+          opacity: 0.12,
+          duration: 3.4,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+        })
 
-      gsap.to(scanRef.current, {
-        yPercent: 360,
-        duration: 4.2,
-        ease: "none",
-        repeat: -1,
-      })
+        gsap.to(scanRef.current, {
+          yPercent: 260,
+          duration: 6.5,
+          ease: "none",
+          repeat: -1,
+        })
+      }
 
       const lines = titleRef.current?.querySelectorAll(".about-line")
 
@@ -180,7 +186,7 @@ const About = memo(() => {
             scrollTrigger: {
               trigger: titleRef.current,
               start: "top 80%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             },
           }
         )
@@ -199,7 +205,7 @@ const About = memo(() => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 74%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
         }
       )
@@ -228,35 +234,37 @@ const About = memo(() => {
             scrollTrigger: {
               trigger: group[0],
               start: "top 91%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             },
           }
         )
       })
 
-      gsap.to(".about-float", {
-        y: -16,
-        duration: 2.8,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.16,
-      })
+      if (!isMobile && !prefersReducedMotion) {
+        gsap.to(".about-float", {
+          y: -8,
+          duration: 4.2,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          stagger: 0.18,
+        })
 
-      gsap.to(".about-node", {
-        scale: 1.4,
-        opacity: 1,
-        duration: 1.8,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.2,
-      })
+        gsap.to(".about-node", {
+          scale: 1.18,
+          opacity: 0.9,
+          duration: 2.8,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          stagger: 0.24,
+        })
+      }
     }, sectionRef)
 
     return () => {
       ctx.revert()
-      section?.removeEventListener("mousemove", move)
+      section.removeEventListener("mousemove", move)
     }
   }, [])
 
@@ -272,7 +280,7 @@ const About = memo(() => {
 
       <div
         ref={nebulaRef}
-        className="pointer-events-none absolute right-[-18%] top-[-10%] z-[1] h-[48rem] w-[48rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.22),rgba(217,70,239,0.12)_35%,transparent_68%)] blur-[120px]"
+        className="pointer-events-none absolute right-[-18%] top-[-10%] z-[1] h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.22),rgba(217,70,239,0.12)_35%,transparent_68%)] blur-[90px]"
       />
 
       <div
@@ -289,10 +297,10 @@ const About = memo(() => {
 
       <div
         ref={lightRef}
-        className="pointer-events-none absolute left-0 top-0 z-[2] h-[560px] w-[560px] rounded-full bg-white/[0.065] blur-[150px]"
+        className="pointer-events-none absolute left-0 top-0 z-[2] h-[480px] w-[480px] rounded-full bg-white/[0.065] blur-[110px]"
       />
 
-      <div ref={starFieldRef} className="pointer-events-none absolute inset-0 z-[2]">
+      <div ref={starFieldRef} className="pointer-events-none absolute inset-0 z-[2] hidden sm:block">
         {particles.map((p) => (
           <span
             key={p.id}
@@ -303,7 +311,7 @@ const About = memo(() => {
               width: `${p.size}px`,
               height: `${p.size}px`,
               animation: `pulse ${p.duration}s ease-in-out ${p.delay}s infinite`,
-              boxShadow: "0 0 26px rgba(255,255,255,0.55)",
+              boxShadow: "0 0 14px rgba(255,255,255,0.42)",
             }}
           />
         ))}

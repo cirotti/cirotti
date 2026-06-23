@@ -68,14 +68,15 @@ const Process = memo(() => {
   const cursorRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
 
+  // Menos puntos y sin animación random infinita por cada partícula.
   const particles = useMemo(
     () =>
-      Array.from({ length: 42 }, (_, i) => ({
+      Array.from({ length: 22 }, (_, i) => ({
         id: i,
         x: `${(i * 37) % 100}%`,
         y: `${(i * 61) % 100}%`,
-        s: 2 + (i % 3),
-        o: 0.12 + (i % 6) * 0.045,
+        s: 2 + (i % 2),
+        o: 0.1 + (i % 5) * 0.035,
       })),
     []
   )
@@ -93,40 +94,41 @@ const Process = memo(() => {
           opacity: 1,
           y: 0,
           yPercent: 0,
-          filter: "blur(0px)",
+          clearProps: "filter,transform",
         })
         return
       }
 
-      gsap.set(".process-word", { yPercent: 120, rotateX: -45 })
-      gsap.set(".process-reveal", { opacity: 0, y: 32, filter: "blur(16px)" })
+      // Menos blur y menos 3D para evitar tirones al aparecer.
+      gsap.set(".process-word", { yPercent: 105 })
+      gsap.set(".process-reveal", { opacity: 0, y: 22 })
+      gsap.set(".process-step", { opacity: 0, y: 58, scale: 0.985 })
 
       const intro = gsap.timeline({
         scrollTrigger: {
           trigger: root,
-          start: "top 72%",
+          start: "top 74%",
+          once: true,
         },
       })
 
       intro
         .to(".process-word", {
           yPercent: 0,
-          rotateX: 0,
-          duration: 1.15,
-          stagger: 0.06,
-          ease: "power4.out",
+          duration: 0.9,
+          stagger: 0.045,
+          ease: "power3.out",
         })
         .to(
           ".process-reveal",
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 0.9,
-            stagger: 0.08,
-            ease: "power3.out",
+            duration: 0.65,
+            stagger: 0.06,
+            ease: "power2.out",
           },
-          "-=0.65"
+          "-=0.45"
         )
 
       gsap.to(progressRef.current, {
@@ -134,115 +136,74 @@ const Process = memo(() => {
         ease: "none",
         scrollTrigger: {
           trigger: root,
-          start: "top 20%",
-          end: "bottom 80%",
-          scrub: true,
+          start: "top 22%",
+          end: "bottom 82%",
+          scrub: 0.6,
         },
       })
 
+      // Mantiene el detalle visual, pero más suave que rotar durante todo el scroll.
       gsap.to(".process-orbit", {
-        rotate: 360,
+        rotate: 180,
         ease: "none",
         scrollTrigger: {
           trigger: root,
           start: "top bottom",
           end: "bottom top",
-          scrub: 1,
+          scrub: 1.2,
         },
       })
 
-      gsap.to(".process-dot", {
-        x: "random(-28,28)",
-        y: "random(-34,34)",
-        opacity: "random(0.12,0.55)",
-        duration: "random(2.5,5.5)",
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: 0.03,
+      const steps = gsap.utils.toArray<HTMLElement>(".process-step")
+
+      steps.forEach((step, index) => {
+        const fromX = index === 0 ? 0 : index % 2 === 1 ? 38 : -38
+
+        gsap.fromTo(
+          step,
+          {
+            autoAlpha: 0,
+            y: 58,
+            x: fromX,
+            scale: 0.985,
+          },
+          {
+            autoAlpha: 1,
+            y: 0,
+            x: 0,
+            scale: 1,
+            duration: 0.78,
+            ease: "power2.out",
+            clearProps: "transform,opacity,visibility",
+            scrollTrigger: {
+              trigger: step,
+              start: "top 86%",
+              once: true,
+            },
+          }
+        )
       })
 
-const steps = gsap.utils.toArray<HTMLElement>(".process-step")
-
-steps.forEach((step, index) => {
-  const isMobile = window.innerWidth < 768
-
-  const fromX =
-    index === 0
-      ? 0
-      : index % 2 === 1
-      ? 140   // derecha
-      : -140  // izquierda
-
-gsap.fromTo(
-  step,
-  {
-    opacity: 0,
-    y: 140,
-    x: fromX,
-    scale: 0.94,
-    rotate: index % 2 === 1 ? 3 : -3,
-    filter: "blur(20px)",
-    transformPerspective: 1000,
-    z: -80,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    x: 0,
-    scale: 1,
-    rotate: 0,
-    z: 0,
-    filter: "blur(0px)",
-    duration: 1.3,
-    ease: "power4.out",
-    scrollTrigger: {
-      trigger: step,
-      start: "top 82%",
-    },
-  }
-)
-
-  // PARALLAX SUAVE (mantiene vida)
-  gsap.to(step, {
-    y: -30,
-    ease: "none",
-    scrollTrigger: {
-      trigger: step,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: true,
-    },
-  })
-})
-
       mm.add("(min-width: 900px)", () => {
-        let cx = 0
-        let cy = 0
-        let tx = 0
-        let ty = 0
-        let raf = 0
+        const xTo = gsap.quickTo(cursorRef.current, "x", {
+          duration: 0.55,
+          ease: "power3.out",
+        })
+        const yTo = gsap.quickTo(cursorRef.current, "y", {
+          duration: 0.55,
+          ease: "power3.out",
+        })
 
         const move = (event: MouseEvent) => {
           const rect = root.getBoundingClientRect()
-          tx = event.clientX - rect.left
-          ty = event.clientY - rect.top
+          xTo(event.clientX - rect.left)
+          yTo(event.clientY - rect.top)
         }
 
-        const loop = () => {
-          cx += (tx - cx) * 0.09
-          cy += (ty - cy) * 0.09
-
-          gsap.set(cursorRef.current, { x: cx, y: cy })
-          raf = requestAnimationFrame(loop)
-        }
-
-        root.addEventListener("mousemove", move)
-        raf = requestAnimationFrame(loop)
+        root.addEventListener("mousemove", move, { passive: true })
 
         return () => {
           root.removeEventListener("mousemove", move)
-          cancelAnimationFrame(raf)
         }
       })
     }, root)
@@ -257,14 +218,14 @@ gsap.fromTo(
       className="relative isolate overflow-hidden bg-[#030511] px-5 py-24 text-white sm:px-6 md:py-32 lg:px-10 xl:px-20"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_90%_20%,rgba(99,102,241,0.16),transparent_28%),radial-gradient(circle_at_60%_90%,rgba(217,70,239,0.13),transparent_32%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.12]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.14),transparent_30%),radial-gradient(circle_at_90%_20%,rgba(99,102,241,0.14),transparent_28%),radial-gradient(circle_at_60%_90%,rgba(217,70,239,0.11),transparent_32%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:90px_90px] opacity-[0.1]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(3,5,17,0.9)_76%)]" />
 
         {particles.map((p) => (
           <span
             key={p.id}
-            className="process-dot absolute rounded-full bg-cyan-100 shadow-[0_0_22px_rgba(103,232,249,0.8)]"
+            className="absolute rounded-full bg-cyan-100/80 shadow-[0_0_14px_rgba(103,232,249,0.55)]"
             style={{
               left: p.x,
               top: p.y,
@@ -278,11 +239,11 @@ gsap.fromTo(
 
       <div
         ref={cursorRef}
-        className="pointer-events-none absolute left-0 top-0 z-0 hidden h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-[80px] lg:block"
+        className="pointer-events-none absolute left-0 top-0 z-0 hidden h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-[70px] lg:block"
       />
 
-      <div className="process-orbit pointer-events-none absolute right-[-220px] top-16 hidden h-[620px] w-[620px] rounded-full border border-white/10 lg:block">
-        <span className="absolute left-1/2 top-[-5px] h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-cyan-200 shadow-[0_0_35px_rgba(103,232,249,1)]" />
+      <div className="process-orbit pointer-events-none absolute right-[-220px] top-16 hidden h-[560px] w-[560px] rounded-full border border-white/10 lg:block">
+        <span className="absolute left-1/2 top-[-5px] h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-cyan-200 shadow-[0_0_26px_rgba(103,232,249,0.8)]" />
       </div>
 
       <div className="mx-auto max-w-[1560px]">
@@ -300,8 +261,8 @@ gsap.fromTo(
                 <span
                   className={
                     i === 3
-                      ? "process-word block origin-bottom bg-gradient-to-r from-cyan-200 via-white to-fuchsia-200 bg-clip-text text-transparent"
-                      : "process-word block origin-bottom"
+                      ? "process-word block origin-bottom bg-gradient-to-r from-cyan-200 via-white to-fuchsia-200 bg-clip-text text-transparent will-change-transform"
+                      : "process-word block origin-bottom will-change-transform"
                   }
                 >
                   {word}
@@ -319,7 +280,7 @@ gsap.fromTo(
             {["Strategy", "Design", "Motion", "Code"].map((item) => (
               <div
                 key={item}
-                className="rounded-3xl border border-white/10 bg-white/[0.04] px-4 py-5 backdrop-blur-xl"
+                className="rounded-3xl border border-white/10 bg-white/[0.04] px-4 py-5 backdrop-blur-lg"
               >
                 <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/42">
                   {item}
@@ -333,7 +294,7 @@ gsap.fromTo(
           <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-white/10 md:block">
             <div
               ref={progressRef}
-              className="h-full w-full origin-top scale-y-0 bg-gradient-to-b from-cyan-300 via-indigo-300 to-fuchsia-300 shadow-[0_0_35px_rgba(103,232,249,0.75)]"
+              className="h-full w-full origin-top scale-y-0 bg-gradient-to-b from-cyan-300 via-indigo-300 to-fuchsia-300 shadow-[0_0_24px_rgba(103,232,249,0.58)]"
             />
           </div>
 
@@ -344,12 +305,12 @@ gsap.fromTo(
               return (
                 <article
                   key={step.n}
-                  className={`process-step group relative w-full max-w-[760px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.045] p-6 shadow-[0_35px_120px_rgba(0,0,0,0.38)] backdrop-blur-2xl md:rounded-[2.4rem] md:p-9 ${getStepPosition(
+                  className={`process-step group relative w-full max-w-[760px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.045] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.32)] backdrop-blur-xl will-change-transform md:rounded-[2.4rem] md:p-9 ${getStepPosition(
                     index
                   )}`}
                 >
-                  <div className="absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.18),transparent_30%),radial-gradient(circle_at_90%_100%,rgba(217,70,239,0.14),transparent_34%)]" />
+                  <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.15),transparent_30%),radial-gradient(circle_at_90%_100%,rgba(217,70,239,0.12),transparent_34%)]" />
                   </div>
 
                   <div className="relative z-10">
@@ -363,7 +324,7 @@ gsap.fromTo(
                         </p>
                       </div>
 
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/[0.06] text-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.14)] transition duration-500 group-hover:scale-110 group-hover:text-cyan-100">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/[0.06] text-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.14)] transition duration-300 group-hover:scale-105 group-hover:text-cyan-100">
                         <Icon className="h-5 w-5" />
                       </div>
                     </div>
@@ -377,7 +338,7 @@ gsap.fromTo(
                         {step.text}
                       </p>
 
-                      <div className="rounded-3xl border border-white/10 bg-black/20 p-5 backdrop-blur-xl">
+                      <div className="rounded-3xl border border-white/10 bg-black/20 p-5 backdrop-blur-lg">
                         <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/35">
                           Output
                         </p>
@@ -392,7 +353,7 @@ gsap.fromTo(
                         Cirotti Studio System
                       </span>
 
-                      <ArrowUpRight className="h-4 w-4 text-cyan-100/55 transition duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      <ArrowUpRight className="h-4 w-4 text-cyan-100/55 transition duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </div>
                   </div>
                 </article>

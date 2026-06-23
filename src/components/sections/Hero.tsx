@@ -60,11 +60,11 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
+      antialias: false,
       powerPreference: "high-performance",
     })
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 1.22
@@ -85,7 +85,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
       emissiveIntensity: 1.15,
     })
 
-    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.7, 7), coreMaterial)
+    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.7, 3), coreMaterial)
     system.add(core)
 
     const coreWire = new THREE.Mesh(
@@ -102,7 +102,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     system.add(coreWire)
 
     const halo = new THREE.Mesh(
-      new THREE.SphereGeometry(3.2, 64, 64),
+      new THREE.SphereGeometry(3.2, 32, 32),
       new THREE.MeshBasicMaterial({
         color: "#818cf8",
         transparent: true,
@@ -124,7 +124,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
 
     ringData.forEach(([radius, tube, color, opacity, rx, ry]) => {
       const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(radius, tube, 24, 320),
+        new THREE.TorusGeometry(radius, tube, 12, 96),
         new THREE.MeshBasicMaterial({
           color,
           transparent: true,
@@ -198,7 +198,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     })
 
     const spiralGeometry = new THREE.BufferGeometry()
-    const spiralCount = 2600
+    const spiralCount = 900
     const spiralPositions = new Float32Array(spiralCount * 3)
     const spiralColors = new Float32Array(spiralCount * 3)
 
@@ -226,9 +226,9 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     spiralGeometry.setAttribute("color", new THREE.BufferAttribute(spiralColors, 3))
 
     const spiralMaterial = new THREE.PointsMaterial({
-      size: 0.024,
+      size: 0.022,
       transparent: true,
-      opacity: 0.92,
+      opacity: 0.82,
       vertexColors: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
@@ -238,7 +238,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     world.add(spiral)
 
     const dustGeometry = new THREE.BufferGeometry()
-    const dustCount = 1300
+    const dustCount = 350
     const dustPositions = new Float32Array(dustCount * 3)
 
     for (let i = 0; i < dustCount; i++) {
@@ -253,7 +253,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
       size: 0.012,
       color: "#ffffff",
       transparent: true,
-      opacity: 0.34,
+      opacity: 0.22,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     })
@@ -280,6 +280,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     let boost = 0
     let raf = 0
     let time = 0
+    let isVisible = true
 
     const handleMouse = (e: MouseEvent) => {
       const rect = section.getBoundingClientRect()
@@ -361,8 +362,17 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
       })
     }
 
-    section.addEventListener("mousemove", handleMouse)
+    section.addEventListener("mousemove", handleMouse, { passive: true })
     section.addEventListener("click", clickBurst)
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+      },
+      { threshold: 0.05 }
+    )
+
+    observer.observe(section)
 
     const resize = () => {
       const w = section.clientWidth
@@ -382,6 +392,10 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     window.addEventListener("resize", resize)
 
     const animate = () => {
+      raf = requestAnimationFrame(animate)
+
+      if (!isVisible || document.hidden) return
+
       time += 0.01
       boost *= 0.94
 
@@ -438,7 +452,6 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
       camera.lookAt(0.75, 0, 0)
 
       renderer.render(scene, camera)
-      raf = requestAnimationFrame(animate)
     }
 
     animate()
@@ -552,6 +565,7 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
       cancelAnimationFrame(raf)
       window.removeEventListener("resize", resize)
       section.removeEventListener("mousemove", handleMouse)
+      observer.disconnect()
       section.removeEventListener("click", clickBurst)
 
       core.geometry.dispose()
@@ -583,17 +597,16 @@ const Hero = memo(({ isLoaded = true }: HeroProps) => {
     const light = lightRef.current
     if (!section || !light) return
 
+    const xTo = gsap.quickTo(light, "x", { duration: 0.5, ease: "power3.out" })
+    const yTo = gsap.quickTo(light, "y", { duration: 0.5, ease: "power3.out" })
+
     const move = (e: MouseEvent) => {
       const rect = section.getBoundingClientRect()
-      gsap.to(light, {
-        x: e.clientX - rect.left - 220,
-        y: e.clientY - rect.top - 220,
-        duration: 0.7,
-        ease: "power3.out",
-      })
+      xTo(e.clientX - rect.left - 220)
+      yTo(e.clientY - rect.top - 220)
     }
 
-    section.addEventListener("mousemove", move)
+    section.addEventListener("mousemove", move, { passive: true })
     return () => section.removeEventListener("mousemove", move)
   }, [])
 

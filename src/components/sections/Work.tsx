@@ -90,7 +90,7 @@ const Work = memo(() => {
 
   const particles = useMemo(
     () =>
-      Array.from({ length: 95 }, (_, i) => ({
+      Array.from({ length: 36 }, (_, i) => ({
         id: i,
         left: `${(i * 19.37 + 7) % 100}%`,
         top: `${(i * 11.91 + 13) % 100}%`,
@@ -108,13 +108,13 @@ const Work = memo(() => {
 
     gsap.fromTo(
       previewImgRef.current,
-      { scale: 1.12, opacity: 0.45, filter: "blur(14px)" },
+      { scale: 1.12, opacity: 0.45, filter: "blur(6px)" },
       {
         scale: 1,
         opacity: 1,
         filter: "blur(0px)",
-        duration: 0.85,
-        ease: "power4.out",
+        duration: 0.42,
+        ease: "power3.out",
       }
     )
 
@@ -164,48 +164,21 @@ const Work = memo(() => {
   }
 
   useEffect(() => {
-    if (!isMobile) return
-
-    let index = active
-
-    const interval = setInterval(() => {
-      index = (index + 1) % projects.length
-      setActive(index)
-      animatePreview()
-
-      const container = projectsRef.current
-      const card = container?.children[index] as HTMLElement | undefined
-
-      if (container && card) {
-        container.scrollTo({
-          left: card.offsetLeft - 20,
-          behavior: "smooth",
-        })
-      }
-    }, 3800)
-
-    return () => clearInterval(interval)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile])
-
-  useEffect(() => {
     const section = sectionRef.current
     const light = lightRef.current
 
+    if (!section || !light) return
+
+    const xTo = gsap.quickTo(light, "x", { duration: 0.45, ease: "power3.out" })
+    const yTo = gsap.quickTo(light, "y", { duration: 0.45, ease: "power3.out" })
+
     const moveLight = (e: MouseEvent) => {
-      if (!section || !light) return
-
       const rect = section.getBoundingClientRect()
-
-      gsap.to(light, {
-        x: e.clientX - rect.left - 270,
-        y: e.clientY - rect.top - 270,
-        duration: 0.7,
-        ease: "power3.out",
-      })
+      xTo(e.clientX - rect.left - 190)
+      yTo(e.clientY - rect.top - 190)
     }
 
-    section?.addEventListener("mousemove", moveLight)
+    section.addEventListener("mousemove", moveLight, { passive: true })
 
     const ctx = gsap.context(() => {
       gsap.set(cursorRef.current, {
@@ -244,13 +217,13 @@ const Work = memo(() => {
 
       gsap.fromTo(
         [titleRef.current, introRef.current, previewRef.current, metaRef.current],
-        { y: 45, opacity: 0, filter: "blur(16px)" },
+        { y: 45, opacity: 0, filter: "blur(8px)" },
         {
           y: 0,
           opacity: 1,
           filter: "blur(0px)",
           stagger: 0.12,
-          duration: 1,
+          duration: 0.75,
           ease: "power4.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -278,7 +251,7 @@ const Work = memo(() => {
         {
           y: window.innerWidth < 768 ? 40 : 70,
           opacity: 0,
-          filter: "blur(12px)",
+          filter: "blur(6px)",
           scale: window.innerWidth < 768 ? 0.96 : 1,
         },
         {
@@ -286,7 +259,7 @@ const Work = memo(() => {
           opacity: 1,
           filter: "blur(0px)",
           scale: 1,
-          duration: 0.95,
+          duration: 0.65,
           stagger: 0.12,
           ease: "power4.out",
           scrollTrigger: {
@@ -333,23 +306,24 @@ const Work = memo(() => {
 
     return () => {
       ctx.revert()
-      section?.removeEventListener("mousemove", moveLight)
+      section.removeEventListener("mousemove", moveLight)
     }
   }, [])
 
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      if (!cursorRef.current || window.innerWidth < 1024) return
+    const cursor = cursorRef.current
+    if (!cursor) return
 
-      gsap.to(cursorRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.22,
-        ease: "power3.out",
-      })
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.16, ease: "power3.out" })
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.16, ease: "power3.out" })
+
+    const move = (e: MouseEvent) => {
+      if (window.innerWidth < 1024) return
+      xTo(e.clientX)
+      yTo(e.clientY)
     }
 
-    window.addEventListener("mousemove", move)
+    window.addEventListener("mousemove", move, { passive: true })
     return () => window.removeEventListener("mousemove", move)
   }, [])
 
@@ -358,7 +332,10 @@ const Work = memo(() => {
 
     const container = projectsRef.current
 
-    const onScroll = () => {
+    let ticking = false
+
+    const updateMobileScroll = () => {
+      ticking = false
       if (window.innerWidth >= 1024) return
 
       const cards = Array.from(container.children) as HTMLElement[]
@@ -370,23 +347,22 @@ const Work = memo(() => {
       cards.forEach((card, index) => {
         const cardCenter = card.offsetLeft + card.clientWidth / 2
         const distance = Math.abs(center - cardCenter)
-
         const strength = Math.max(0, 1 - distance / container.clientWidth)
         const img = card.querySelector(".work-card-img")
 
         gsap.to(card, {
-          scale: 0.94 + strength * 0.06,
-          opacity: 0.62 + strength * 0.38,
-          duration: 0.25,
+          scale: 0.96 + strength * 0.04,
+          opacity: 0.72 + strength * 0.28,
+          duration: 0.18,
           ease: "power2.out",
           overwrite: "auto",
         })
 
         if (img) {
           gsap.to(img, {
-            y: (1 - strength) * 24,
-            scale: 1.08 + strength * 0.04,
-            duration: 0.25,
+            y: (1 - strength) * 12,
+            scale: 1.04 + strength * 0.03,
+            duration: 0.18,
             ease: "power2.out",
             overwrite: "auto",
           })
@@ -398,13 +374,18 @@ const Work = memo(() => {
         }
       })
 
-      if (closestIndex !== active) {
-        setActive(closestIndex)
+      if (closestIndex !== active) setActive(closestIndex)
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(updateMobileScroll)
       }
     }
 
     container.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
+    updateMobileScroll()
 
     return () => container.removeEventListener("scroll", onScroll)
   }, [active])
@@ -423,7 +404,7 @@ const Work = memo(() => {
         className="pointer-events-none fixed left-0 top-0 z-[80] hidden lg:flex"
         aria-label="Ver proyecto"
       >
-        <div className="relative flex h-[132px] w-[132px] items-center justify-center rounded-full border border-cyan-200/35 bg-black/45 backdrop-blur-xl shadow-[0_0_60px_rgba(103,232,249,0.45)]">
+        <div className="relative flex h-[108px] w-[108px] items-center justify-center rounded-full border border-cyan-200/35 bg-black/45 backdrop-blur-xl shadow-[0_0_34px_rgba(103,232,249,0.32)]">
           <div className="absolute inset-0 rounded-full bg-cyan-400/10 blur-xl" />
           <div className="absolute inset-3 rounded-full border border-white/10" />
           <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.34em] text-cyan-100">
@@ -450,7 +431,7 @@ const Work = memo(() => {
 
       <div
         ref={lightRef}
-        className="pointer-events-none absolute left-0 top-0 z-[2] h-[540px] w-[540px] rounded-full bg-white/[0.06] blur-[150px]"
+        className="pointer-events-none absolute left-0 top-0 z-[2] h-[380px] w-[380px] rounded-full bg-white/[0.06] blur-[90px]"
       />
 
       <div className="pointer-events-none absolute inset-0 z-[2]">
@@ -567,7 +548,7 @@ const Work = memo(() => {
                   key={project.title}
                   className={`work-item group relative min-w-[86%] snap-center cursor-pointer overflow-hidden rounded-[34px] border p-5 backdrop-blur-xl transition duration-500 active:scale-[0.97] sm:min-w-[72%] md:p-6 lg:min-w-0 ${
                     isActive
-                      ? "border-cyan-200/25 bg-white/[0.08] shadow-[0_24px_100px_rgba(34,211,238,0.12)]"
+                      ? "border-cyan-200/25 bg-white/[0.08] shadow-[0_18px_55px_rgba(34,211,238,0.10)]"
                       : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]"
                   }`}
                   onMouseEnter={() => !isMobile && activateProject(index)}
@@ -637,7 +618,9 @@ const Work = memo(() => {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="work-card-img h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                        loading="lazy"
+                        decoding="async"
+                        className="work-card-img h-full w-full object-cover transition duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-white/10" />
 
@@ -653,7 +636,7 @@ const Work = memo(() => {
 
           <div
             ref={previewRef}
-            className="relative h-fit overflow-hidden rounded-[42px] border border-white/12 bg-white/[0.065] p-5 shadow-[0_45px_190px_rgba(0,0,0,0.72)] backdrop-blur-2xl lg:sticky lg:top-24"
+            className="relative h-fit overflow-hidden rounded-[42px] border border-white/12 bg-white/[0.065] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-2xl lg:sticky lg:top-24"
           >
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.2),transparent_25%,transparent_62%,rgba(255,255,255,0.08))]" />
             <div className="pointer-events-none absolute inset-[1px] rounded-[41px] border border-white/[0.06]" />
@@ -676,6 +659,8 @@ const Work = memo(() => {
                   ref={previewImgRef}
                   src={activeProject.image}
                   alt={activeProject.title}
+                  loading="eager"
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
 
