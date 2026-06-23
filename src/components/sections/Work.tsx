@@ -32,13 +32,14 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Scatelier",
-    categoria: "Librería",
+    title: "SGC Servicios",
+    categoria: "Trabajos en Altura",
     anio: "2026",
-    descripcion: "Librería CSS para animaciones de botones y texto.",
-    githubUrl: "https://github.com/",
-    projectUrl: "https://github.com/",
-    image: `${import.meta.env.BASE_URL}scatelier.png`,
+    descripcion:
+      "Sitio corporativo premium para una empresa especializada en trabajos en altura, accesos difíciles, mantenimiento industrial y soluciones de alta complejidad.",
+    githubUrl: "https://sgc-servicios.vercel.app/",
+    projectUrl: "https://sgc-servicios.vercel.app/",
+    image: `${import.meta.env.BASE_URL}sgcservicios2.png`,
   },
   {
     title: "TSPC",
@@ -546,11 +547,10 @@ const Work = memo(() => {
               return (
                 <article
                   key={project.title}
-                  className={`work-item group relative min-w-[86%] snap-center cursor-pointer overflow-hidden rounded-[34px] border p-5 backdrop-blur-xl transition duration-500 active:scale-[0.97] sm:min-w-[72%] md:p-6 lg:min-w-0 ${
-                    isActive
+                  className={`work-item group relative min-w-[86%] snap-center cursor-pointer overflow-hidden rounded-[34px] border p-5 backdrop-blur-xl transition duration-500 active:scale-[0.97] sm:min-w-[72%] md:p-6 lg:min-w-0 ${isActive
                       ? "border-cyan-200/25 bg-white/[0.08] shadow-[0_18px_55px_rgba(34,211,238,0.10)]"
                       : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]"
-                  }`}
+                    }`}
                   onMouseEnter={() => !isMobile && activateProject(index)}
                   onMouseLeave={() => !isMobile && hideCursor()}
                   onClick={() => {
