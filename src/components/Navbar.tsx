@@ -8,17 +8,12 @@ interface NavbarProps {
 const navLinks = [
   { label: "Sobre mí", href: "#about", code: "01" },
   { label: "Proyectos", href: "#work", code: "02" },
-  { label: "Contacto", href: "#contact", code: "03" },
+  { label: "Precios", href: "#pricing", code: "03" },
+  { label: "Contacto", href: "#contact", code: "04" },
 ]
 
 const Navbar = ({ isLoaded = true }: NavbarProps) => {
   const navRef = useRef<HTMLElement>(null)
-  const shellRef = useRef<HTMLDivElement>(null)
-  const glowRef = useRef<HTMLDivElement>(null)
-  const menuRef = useRef<HTMLDivElement>(null)
-  const mobilePanelRef = useRef<HTMLDivElement>(null)
-  const mobileLinksRef = useRef<HTMLDivElement>(null)
-
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -27,105 +22,38 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
 
     gsap.fromTo(
       navRef.current,
-      { y: -90, opacity: 0, filter: "blur(12px)" },
+      { y: -70, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        filter: "blur(0px)",
-        duration: 1,
-        delay: 0.25,
-        ease: "power4.out",
+        duration: 0.65,
+        delay: 0.12,
+        ease: "power3.out",
       }
     )
   }, [isLoaded])
 
   useEffect(() => {
-    const onScroll = () => {
-      const active = window.scrollY > 24
-      setScrolled(active)
+    let ticking = false
 
-      gsap.to(shellRef.current, {
-        backgroundColor: active
-          ? "rgba(3,5,17,0.92)"
-          : "rgba(255,255,255,0.035)",
-        borderColor: active
-          ? "rgba(103,232,249,0.35)"
-          : "rgba(255,255,255,0.08)",
-        boxShadow: active
-          ? "0 20px 120px rgba(0,0,0,0.7), 0 0 90px rgba(34,211,238,0.25)"
-          : "0 0 0 rgba(0,0,0,0)",
-        duration: 0.5,
-        ease: "power3.out",
-      })
-
-      gsap.to(glowRef.current, {
-        opacity: active ? 1 : 0,
-        scale: active ? 1.1 : 0.7,
-        duration: 0.5,
-        ease: "power3.out",
-      })
+    const update = () => {
+      setScrolled(window.scrollY > 24)
+      ticking = false
     }
 
-    onScroll()
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      window.requestAnimationFrame(update)
+    }
+
+    update()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   useEffect(() => {
-    const panel = mobilePanelRef.current
-    const links = mobileLinksRef.current?.querySelectorAll(".mobile-link")
-
-    if (!panel || !links?.length) return
-
-    if (isOpen) {
-      document.body.style.overflow = "hidden"
-      gsap.set(menuRef.current, { pointerEvents: "auto" })
-
-      gsap.fromTo(
-        panel,
-        { clipPath: "circle(0% at 90% 7%)", opacity: 1 },
-        {
-          clipPath: "circle(150% at 90% 7%)",
-          duration: 0.9,
-          ease: "expo.inOut",
-        }
-      )
-
-      gsap.fromTo(
-        links,
-        { y: 60, opacity: 0, filter: "blur(12px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          stagger: 0.09,
-          delay: 0.22,
-          duration: 0.8,
-          ease: "power4.out",
-        }
-      )
-    } else {
-      document.body.style.overflow = ""
-
-      gsap.to(links, {
-        y: -24,
-        opacity: 0,
-        filter: "blur(10px)",
-        stagger: 0.035,
-        duration: 0.28,
-        ease: "power3.in",
-      })
-
-      gsap.to(panel, {
-        clipPath: "circle(0% at 90% 7%)",
-        duration: 0.65,
-        ease: "expo.inOut",
-        onComplete: () => {
-          gsap.set(menuRef.current, { pointerEvents: "none" })
-        },
-      })
-    }
-
+    document.body.style.overflow = isOpen ? "hidden" : ""
     return () => {
       document.body.style.overflow = ""
     }
@@ -133,6 +61,12 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false)
+
+    if (href === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+      return
+    }
+
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" })
   }
 
@@ -140,46 +74,30 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
     <>
       <nav
         ref={navRef}
-        className="fixed left-0 right-0 top-0 z-50 px-4 py-4 sm:px-6 md:px-10 lg:px-16 xl:px-24"
+        className="fixed left-0 right-0 top-0 z-[70] px-4 py-4 sm:px-6 md:px-10 lg:px-16 xl:px-24"
         style={{ opacity: isLoaded ? 1 : 0 }}
       >
         <div
-          ref={shellRef}
-          className={`relative mx-auto flex max-w-[1500px] items-center justify-between overflow-hidden rounded-full border px-4 backdrop-blur-2xl transition-all duration-500 sm:px-5 ${
-            scrolled ? "py-2" : "py-3"
+          className={`relative mx-auto flex max-w-[1500px] items-center justify-between overflow-hidden rounded-full border px-4 backdrop-blur-xl transition-[padding,background-color,border-color,box-shadow] duration-300 sm:px-5 ${
+            scrolled
+              ? "border-cyan-200/25 bg-[#030511]/90 py-2 shadow-[0_18px_80px_rgba(0,0,0,0.55)]"
+              : "border-white/10 bg-white/[0.04] py-3 shadow-none"
           }`}
         >
-          <div
-            ref={glowRef}
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[180px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-cyan-300/40 via-indigo-400/30 to-fuchsia-400/40 opacity-0 blur-[80px]"
-          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.1),transparent_30%,transparent_72%,rgba(255,255,255,0.04))]" />
 
-          <div
-            className={`pointer-events-none absolute inset-x-10 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-200 to-transparent transition-all duration-500 ${
-              scrolled ? "opacity-100" : "opacity-0"
-            }`}
-          />
-
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.13),transparent_28%,transparent_70%,rgba(255,255,255,0.05))]" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
-
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault()
-              window.scrollTo({ top: 0, behavior: "smooth" })
-            }}
+          <button
+            type="button"
+            onClick={() => handleNavClick("#")}
             className="group relative z-10 inline-flex items-center gap-3 text-white"
             aria-label="Ir al inicio"
           >
             <span
-              className={`relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.055] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 ${
-                scrolled
-                  ? "scale-90 shadow-[0_0_35px_rgba(103,232,249,0.35)]"
-                  : ""
+              className={`relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.055] transition-transform duration-300 ${
+                scrolled ? "scale-90" : ""
               }`}
             >
-              <span className="absolute h-2.5 w-2.5 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(165,243,252,0.9)]" />
+              <span className="absolute h-2.5 w-2.5 rounded-full bg-cyan-200 shadow-[0_0_20px_rgba(165,243,252,0.85)]" />
               <span className="absolute inset-2 rounded-full border border-white/10" />
             </span>
 
@@ -196,17 +114,22 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
                 </span>
               </span>
             </span>
-          </a>
+          </button>
 
           <div className="relative z-10 hidden items-center md:flex">
             <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/20 p-1">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
+                  type="button"
                   onClick={() => handleNavClick(link.href)}
-                  className="group relative overflow-hidden rounded-full px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-white/55 transition duration-300 hover:text-white"
+                  className={`group relative overflow-hidden rounded-full px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] transition duration-300 hover:text-white ${
+                    link.href === "#pricing"
+                      ? "bg-cyan-300/[0.09] text-cyan-100"
+                      : "text-white/55"
+                  }`}
                 >
-                  <span className="absolute inset-0 scale-75 rounded-full bg-white/[0.075] opacity-0 transition duration-300 group-hover:scale-100 group-hover:opacity-100" />
+                  <span className="absolute inset-0 scale-75 rounded-full bg-white/[0.07] opacity-0 transition duration-300 group-hover:scale-100 group-hover:opacity-100" />
                   <span className="relative z-10 inline-flex items-center gap-2">
                     <span className="text-white/28">{link.code}</span>
                     {link.label}
@@ -216,15 +139,14 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
             </div>
           </div>
 
-          <div className="relative z-50 flex items-center md:hidden">
+          <div className="relative z-[90] flex items-center md:hidden">
             <button
+              type="button"
               onClick={() => setIsOpen((prev) => !prev)}
-              className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.055] text-white backdrop-blur-xl"
-              aria-label="Abrir menú"
+              className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.065] text-white backdrop-blur-xl"
+              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isOpen}
             >
-              <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.12),transparent_65%)] opacity-0 transition duration-300 group-hover:opacity-100" />
-
               <span className="relative flex h-5 w-5 flex-col items-center justify-center gap-1.5">
                 <span
                   className={`h-px w-5 bg-white transition duration-300 ${
@@ -248,61 +170,66 @@ const Navbar = ({ isLoaded = true }: NavbarProps) => {
       </nav>
 
       <div
-        ref={menuRef}
-        className="pointer-events-none fixed inset-0 z-40 md:hidden"
+        className={`fixed inset-0 z-[60] bg-[#030511] transition duration-300 md:hidden ${
+          isOpen
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-full opacity-0"
+        }`}
       >
-        <div
-          ref={mobilePanelRef}
-          className="absolute inset-0 overflow-hidden bg-[#030511]"
-          style={{ clipPath: "circle(0% at 90% 7%)" }}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_15%,rgba(99,102,241,0.28),transparent_36%),radial-gradient(circle_at_20%_80%,rgba(34,211,238,0.12),transparent_32%),radial-gradient(circle_at_90%_75%,rgba(217,70,239,0.18),transparent_32%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_15%,rgba(99,102,241,0.24),transparent_36%),radial-gradient(circle_at_20%_80%,rgba(34,211,238,0.1),transparent_32%),radial-gradient(circle_at_90%_75%,rgba(217,70,239,0.15),transparent_32%)]" />
+        <div className="absolute left-1/2 top-[18%] h-56 w-56 -translate-x-1/2 rounded-full bg-cyan-300/10 blur-[70px]" />
 
-          <div className="absolute left-1/2 top-[18%] h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-300/10 blur-[90px]" />
+        <div className="relative z-10 flex min-h-screen flex-col justify-center px-6 pt-24">
+          <div className="mb-8 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 backdrop-blur-xl">
+            <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,0.95)]" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/55">
+              Navigation
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            {navLinks.map((link, index) => (
+              <button
+                key={link.href}
+                type="button"
+                onClick={() => handleNavClick(link.href)}
+                className={`flex w-full items-center justify-between overflow-hidden rounded-[28px] border px-5 py-5 text-left backdrop-blur-xl transition duration-300 ${
+                  isOpen ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+                } ${
+                  link.href === "#pricing"
+                    ? "border-cyan-200/20 bg-cyan-300/[0.07]"
+                    : "border-white/10 bg-white/[0.045]"
+                }`}
+                style={{ transitionDelay: isOpen ? `${index * 55 + 90}ms` : "0ms" }}
+              >
+                <span className="flex items-center gap-4">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/30">
+                    {link.code}
+                  </span>
+                  <span className="text-4xl font-black uppercase tracking-[-0.06em] text-white">
+                    {link.label}
+                  </span>
+                </span>
+
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/20 text-white/60">
+                  ↗
+                </span>
+              </button>
+            ))}
+          </div>
 
           <div
-            ref={mobileLinksRef}
-            className="relative z-10 flex min-h-screen flex-col justify-center px-6 pt-24"
+            className={`mt-8 rounded-[28px] border border-white/10 bg-black/25 p-5 backdrop-blur-xl transition duration-300 ${
+              isOpen ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            }`}
+            style={{ transitionDelay: isOpen ? "330ms" : "0ms" }}
           >
-            <div className="mb-8 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 backdrop-blur-xl">
-              <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,0.95)]" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/55">
-                Navigation
-              </span>
-            </div>
-
-            <div className="space-y-3">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  className="mobile-link group flex w-full items-center justify-between overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.045] px-5 py-5 text-left backdrop-blur-xl"
-                >
-                  <span className="flex items-center gap-4">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/30">
-                      {link.code}
-                    </span>
-                    <span className="text-4xl font-black uppercase tracking-[-0.06em] text-white">
-                      {link.label}
-                    </span>
-                  </span>
-
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/20 text-white/60 transition group-hover:text-white">
-                    ↗
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-[28px] border border-white/10 bg-black/25 p-5 backdrop-blur-xl">
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
-                Cirotti / Creative Developer
-              </p>
-              <p className="mt-3 text-sm leading-6 text-white/56">
-                Experiencias web, sistemas vivos, bots y productos digitales con
-                identidad visual premium.
-              </p>
-            </div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
+              Cirotti / Creative Developer
+            </p>
+            <p className="mt-3 text-sm leading-6 text-white/56">
+              Experiencias web, sistemas vivos, bots y productos digitales con identidad visual premium.
+            </p>
           </div>
         </div>
       </div>
