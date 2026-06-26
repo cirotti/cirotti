@@ -42,6 +42,16 @@ const projects: Project[] = [
     image: `${import.meta.env.BASE_URL}sgcservicios2.png`,
   },
   {
+    title: "Servicio Iphone",
+    categoria: "Servicio Tecnico Iphone",
+    anio: "2026",
+    descripcion:
+      "Servicio técnico iPhone en Santiago. Pantallas, baterías, cámaras, puertos de carga y diagnóstico profesional con atención a domicilio y garantía real.",
+    githubUrl: "https://serviciotecnicoiphone.cl/",
+    projectUrl: "https://serviciotecnicoiphone.cl/",
+    image: `${import.meta.env.BASE_URL}sti.png`,
+  },
+  {
     title: "TSPC",
     categoria: "Warzone Tournaments",
     anio: "2026",
@@ -548,8 +558,8 @@ const Work = memo(() => {
                 <article
                   key={project.title}
                   className={`work-item group relative min-w-[86%] snap-center cursor-pointer overflow-hidden rounded-[34px] border p-5 backdrop-blur-xl transition duration-500 active:scale-[0.97] sm:min-w-[72%] md:p-6 lg:min-w-0 ${isActive
-                      ? "border-cyan-200/25 bg-white/[0.08] shadow-[0_18px_55px_rgba(34,211,238,0.10)]"
-                      : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]"
+                    ? "border-cyan-200/25 bg-white/[0.08] shadow-[0_18px_55px_rgba(34,211,238,0.10)]"
+                    : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]"
                     }`}
                   onMouseEnter={() => !isMobile && activateProject(index)}
                   onMouseLeave={() => !isMobile && hideCursor()}
